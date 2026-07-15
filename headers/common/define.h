@@ -1,0 +1,9 @@
+#ifndef DEFINE_H
+#define DEFINE_H
+
+#define MAX_PACKET_SIZE 65536
+#define MAC_ADDRESS_SIZE 6
+#define ETHER_TYPE_SIZE 2
+#define ETHERNET_HEADER_SIZE 14
+
+#endif

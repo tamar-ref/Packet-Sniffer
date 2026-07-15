@@ -9,6 +9,7 @@
 #include "../../headers/capture/sniffer.h"
 #include "../../headers/output/printer.h"
 #include "../../headers/common/types.h"
+#include "../../headers/parser/layer2/ethernet.h"
 
 void start_sniffer()
 {
@@ -47,6 +48,14 @@ void start_sniffer()
         if (packet.length < 0)
         {
             perror("Receive failed");
+            continue;
+        }
+
+        if (parse_ethernet(packet.data,
+                           packet.length,
+                           &packet.ethernet) != 0)
+        {
+            printf("Invalid Ethernet Header\n");
             continue;
         }
 

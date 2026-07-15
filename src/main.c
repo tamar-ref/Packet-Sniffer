@@ -2,8 +2,6 @@
 
 int main()
 {
-
     start_sniffer();
-
     return 0;
 }
