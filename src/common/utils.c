@@ -1,6 +1,4 @@
-#include <stdio.h>
-
-#include "../../headers/common/define.h"
+#include "../../headers/common/utils.h"
 
 void print_mac(unsigned char mac[MAC_ADDRESS_SIZE])
 {
