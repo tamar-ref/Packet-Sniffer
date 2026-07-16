@@ -1,9 +1,4 @@
-#include <string.h>
-#include <arpa/inet.h>
-
 #include "../../../headers/parser/layer2/ethernet.h"
-#include "../../../headers/common/types.h"
-#include "../../../headers/common/define.h"
 
 int parse_ethernet(
     const unsigned char *buffer,

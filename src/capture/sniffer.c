@@ -1,15 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/socket.h>
-#include <netpacket/packet.h>
-#include <net/ethernet.h>
-#include <arpa/inet.h>
-
 #include "../../headers/capture/sniffer.h"
-#include "../../headers/output/printer.h"
-#include "../../headers/common/types.h"
-#include "../../headers/parser/layer2/ethernet.h"
 
 void start_sniffer()
 {
@@ -57,6 +46,13 @@ void start_sniffer()
         {
             printf("Invalid Ethernet Header\n");
             continue;
+        }
+
+        if (packet.ethernet.ether_type == 0x0800)
+        {
+            parse_ipv4(packet.data + 14,
+                       packet.length - 14,
+                       &packet.ipv4);
         }
 
         print_packet(packet);
