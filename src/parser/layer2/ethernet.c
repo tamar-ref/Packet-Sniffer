@@ -1,32 +1,28 @@
 #include "../../../headers/parser/layer2/ethernet.h"
 
-int parse_ethernet(
-    const unsigned char *buffer,
-    size_t length,
-    Ethernet *ethernet)
+int parse_ethernet(Packet *packet, size_t *offset)
 {
-    if (length < ETHERNET_HEADER_SIZE)
+    if (packet == NULL || offset == NULL)
     {
         return -1;
     }
 
-    memcpy(
-        ethernet->destination_mac,
-        buffer,
-        MAC_ADDRESS_SIZE);
+    packet->has_vlan = 0;
 
-    memcpy(
-        ethernet->source_mac,
-        buffer + MAC_ADDRESS_SIZE,
-        MAC_ADDRESS_SIZE);
+    memcpy(&packet->ethernet,
+           packet->payload + *offset,
+           sizeof(Ethernet));
+    packet->ethernet.ether_type = ntohs(packet->ethernet.ether_type);
 
-    memcpy(
-        &ethernet->ether_type,
-        buffer + (MAC_ADDRESS_SIZE) * 2,
-        ETHER_TYPE_SIZE);
+    *offset += sizeof(Ethernet);
 
-    ethernet->ether_type =
-        ntohs(ethernet->ether_type);
+    if (packet->ethernet.ether_type == TPID)
+    {
+        if (parse_vlan(packet, offset) != 0)
+        {
+            return -1;
+        }
+    }
 
     return 0;
 }
