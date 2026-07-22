@@ -3,10 +3,9 @@
 
 #include <stdio.h>
 
-#include "../common/types.h"
-#include "ethernet.h"
+#include "../common/types/packet.h"
+#include "layer2.h"
 #include "payload.h"
-#include "ipv4.h"
 
 void print_packet(Packet packet);
 

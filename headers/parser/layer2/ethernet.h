@@ -4,11 +4,10 @@
 #include <string.h>
 #include <arpa/inet.h>
 
-#include "../../common/types.h"
+#include "../../common/types/packet.h"
 #include "../../common/define.h"
+#include "vlan.h"
 
-int parse_ethernet(const unsigned char *buffer,
-                    size_t length,
-                    Ethernet *ethernet);
+int parse_ethernet(Packet *packet, size_t *offset);
 
 #endif

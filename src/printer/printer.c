@@ -9,22 +9,9 @@ void print_packet(Packet packet)
 
     printf("Size: %zu bytes\n", packet.length);
 
-    print_ethernet(packet.ethernet);
+    print_layer2(packet);
 
-    // צריך לבדוק שיש IPv4
-    print_ipv4(packet.ipv4);
-
-    /*
-        print_vlan(...);
-        print_arp(...);
-        print_ipv6(...);
-        print_tcp(...);
-        print_udp(...);
-        print_http(...);
-        print_dns(...);
-    */
-
-    print_payload(packet.data, packet.length);
+    print_payload(packet.payload, packet.length);
 
     printf("====================================================\n");
 }

@@ -6,7 +6,7 @@
 #include <unistd.h>
 
 #include "../printer/printer.h"
-#include "../common/types.h"
+#include "../common/types/packet.h"
 #include "../parser/layer2/ethernet.h"
 #include "../parser/layer3/ipv4.h"
 

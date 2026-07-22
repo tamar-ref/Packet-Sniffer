@@ -28,7 +28,7 @@ void start_sniffer()
 
         packet.length = recvfrom(
             socket_fd,
-            packet.data,
+            packet.payload,
             MAX_PACKET_SIZE,
             0,
             NULL,
@@ -40,19 +40,12 @@ void start_sniffer()
             continue;
         }
 
-        if (parse_ethernet(packet.data,
-                           packet.length,
-                           &packet.ethernet) != 0)
-        {
-            printf("Invalid Ethernet Header\n");
-            continue;
-        }
+        size_t offset = 0;
 
-        if (packet.ethernet.ether_type == 0x0800)
+        if (parse_ethernet(&packet, &offset) != 0)
         {
-            parse_ipv4(packet.data + 14,
-                       packet.length - 14,
-                       &packet.ipv4);
+            printf("Ethernet Error\n");
+            continue;
         }
 
         print_packet(packet);
@@ -62,3 +55,46 @@ void start_sniffer()
 
     close(socket_fd);
 }
+
+// void start_sniffer()
+// {
+//     Packet packet;
+//     unsigned char test_packet[] =
+//         {
+//             0x01,
+//             0x02,
+//             0x03,
+//             0x04,
+//             0x05,
+//             0x06,
+//             0x07,
+//             0x08,
+//             0x09,
+//             0x10,
+//             0x11,
+//             0x12,
+//             0x81,
+//             0x00,
+//             0xa0,
+//             0x0a,
+//             0x97,
+//             0x96,
+//             0x95,
+//             0x094,
+//         };
+
+//     packet.length = sizeof(test_packet);
+
+//     memcpy(packet.payload,
+//            test_packet,
+//            packet.length);
+
+//     size_t offset = 0;
+
+//     if (parse_ethernet(&packet, &offset) != 0)
+//     {
+//         printf("Ethernet Error\n");
+//     }
+
+//     print_packet(packet);
+// }
