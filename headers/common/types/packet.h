@@ -13,6 +13,8 @@ typedef struct
     Ethernet ethernet;
     int has_vlan;
     Vlan vlan;
+    int has_arp;
+    Arp arp;
 } Packet;
 
 #endif

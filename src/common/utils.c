@@ -11,3 +11,13 @@ void print_mac(unsigned char mac[MAC_ADDRESS_SIZE])
         mac[4],
         mac[5]);
 }
+
+void print_ip(unsigned char ip[IP_ADDRESS_SIZE])
+{
+    printf(
+        "%d.%d.%d.%d",
+        ip[0],
+        ip[1],
+        ip[2],
+        ip[3]);
+}
