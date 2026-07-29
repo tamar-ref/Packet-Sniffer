@@ -11,4 +11,5 @@ main:
 		src/printer/payload.c \
 		src/parser/layer2/ethernet.c \
 		src/parser/layer2/vlan.c \
+		src/parser/layer2/arp.c \
 	    -o src/main

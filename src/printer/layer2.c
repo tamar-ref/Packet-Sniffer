@@ -2,17 +2,17 @@
 
 void print_ethernet(Ethernet ethernet)
 {
-    printf("Protocol        : Ethernet II\n");
+    printf("Protocol                : Ethernet II\n");
 
-    printf("Destination MAC : ");
+    printf("Destination MAC         : ");
     print_mac(ethernet.destination_mac);
     printf("\n");
 
-    printf("Source MAC      : ");
+    printf("Source MAC              : ");
     print_mac(ethernet.source_mac);
     printf("\n");
 
-    printf("EtherType       : 0x%04X\n", ethernet.ether_type);
+    printf("EtherType               : 0x%04X\n", ethernet.ether_type);
 }
 
 void print_vlan(Vlan vlan)
@@ -21,26 +21,57 @@ void print_vlan(Vlan vlan)
     uint16_t dei = (vlan.tci >> 12) & 0x01;
     uint16_t vid = vlan.tci & 0x0FFF;
 
-    printf("\nProtocol        : VLAN\n");
+    printf("\nProtocol                : VLAN\n");
 
-    printf("TPID            : 0x%04X\n", vlan.tpid);
+    printf("TPID                    : 0x%04X\n", vlan.tpid);
 
-    printf("Priority (PCP)  : %u\n", pcp);
-    printf("DEI             : %u\n", dei);
-    printf("VLAN ID (VID)   : %u\n", vid);
+    printf("Priority (PCP)          : %u\n", pcp);
+    printf("DEI                     : %u\n", dei);
+    printf("VLAN ID (VID)           : %u\n", vid);
 
-    printf("EtherType       : 0x%04X\n", vlan.ether_type);
+    printf("EtherType               : 0x%04X\n", vlan.ether_type);
+}
+
+void print_arp(Arp arp)
+{
+    printf("\nProtocol                : ARP\n");
+
+    printf("Hardware Type           : 0x%04X\n", arp.htype);
+    printf("Protocol Type           : 0x%04X\n", arp.ptype);
+    printf("Hardware Length         : 0x%02X\n", arp.hlen);
+    printf("Protocol Length         : 0x%02X\n", arp.plen);
+    printf("Opcode                  : 0x%04X\n", arp.opcode);
+
+    printf("Sender Hardware Address : ");
+    print_mac(arp.sha);
+    printf("\n");
+
+    printf("Sender Protocol Address : ");
+    print_ip(arp.spa);
+    printf("\n");
+
+    printf("Sender Hardware Address : ");
+    print_mac(arp.tha);
+    printf("\n");
+
+    printf("Target Protocol Address : ");
+    print_ip(arp.tpa);
+    printf("\n");
 }
 
 void print_layer2(Packet packet)
 {
     printf("\nLayer 2\n");
-    printf("-----------------\n");
+    printf("-------------------------\n");
 
     print_ethernet(packet.ethernet);
 
     if (packet.has_vlan)
     {
         print_vlan(packet.vlan);
+    }
+    if (packet.has_arp)
+    {
+        print_arp(packet.arp);
     }
 }

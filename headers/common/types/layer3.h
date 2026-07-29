@@ -19,8 +19,8 @@ typedef struct
     uint8_t ttl;
     uint8_t protocol;
     uint16_t header_checksum;
-    uint32_t source_ip;
-    uint32_t destination_ip;
+    uint8_t source_ip[IP_ADDRESS_SIZE];
+    uint8_t destination_ip[IP_ADDRESS_SIZE];
 } IPv4;
 
 typedef struct

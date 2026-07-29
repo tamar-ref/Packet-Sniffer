@@ -25,9 +25,9 @@ typedef struct
     uint8_t plen;
     uint16_t opcode;
     uint8_t sha[MAC_ADDRESS_SIZE];
-    uint32_t spa;
+    uint8_t spa[IP_ADDRESS_SIZE];
     uint8_t tha[MAC_ADDRESS_SIZE];
-    uint32_t tpa;
+    uint8_t tpa[IP_ADDRESS_SIZE];
 } Arp;
 
 typedef struct

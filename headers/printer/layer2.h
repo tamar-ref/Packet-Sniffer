@@ -9,6 +9,7 @@
 
 void print_ethernet(Ethernet ethernet);
 void print_vlan(Vlan vlan);
+void print_arp(Arp arp);
 void print_layer2(Packet packet);
 
 #endif

@@ -7,6 +7,7 @@
 #include "../../common/types/packet.h"
 #include "../../common/define.h"
 #include "vlan.h"
+#include "arp.h"
 
 int parse_ethernet(Packet *packet, size_t *offset);
 
