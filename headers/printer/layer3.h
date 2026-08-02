@@ -4,9 +4,10 @@
 #include <stdio.h>
 
 #include "../common/utils.h"
+#include "../common/types/packet.h"
 #include "../common/types/layer3.h"
 
 void print_ipv4(IPv4 ipv4);
-void print_layer3(IPv4 ipv4);
+void print_layer3(Packet packet);
 
 #endif

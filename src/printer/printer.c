@@ -10,6 +10,7 @@ void print_packet(Packet packet)
     printf("Size: %zu bytes\n", packet.length);
 
     print_layer2(packet);
+    print_layer3(packet);
 
     print_payload(packet.payload, packet.length);
 
