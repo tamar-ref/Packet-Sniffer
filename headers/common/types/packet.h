@@ -15,6 +15,7 @@ typedef struct
     Vlan vlan;
     int has_arp;
     Arp arp;
+    IPv4 ipv4;
 } Packet;
 
 #endif

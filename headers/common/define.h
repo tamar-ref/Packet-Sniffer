@@ -9,4 +9,6 @@
 #define TPID 0x8100
 #define ARP_ETHERTYPE 0x0806
 
+#define MAX_OPTIONS_SIZE 40
+
 #endif

@@ -2,67 +2,57 @@
 
 void print_ipv4(IPv4 ipv4)
 {
-    struct in_addr source;
-    struct in_addr destination;
+       printf("\nProtocol                : IPv4\n");
 
-    source.s_addr = ipv4.source_ip;
-    destination.s_addr = ipv4.destination_ip;
+       uint8_t version = ipv4.version_ihl >> 4;
+       uint8_t ihl = ipv4.version_ihl & 0x0F;
 
-    printf("\nLayer 3\n");
-    printf("-----------------\n");
+       uint16_t flags = (ipv4.flags_fragment_offset >> 13) & 0x07;
+       uint16_t fragment_offset = ipv4.flags_fragment_offset & 0x1FFF;
 
-    printf("Protocol : IPv4\n\n");
+       printf("Version                 : %u\n", version);
+       printf("IHL                     : %u bytes\n", ihl * 4);
+       printf("Total Length            : 0x%04x\n", ipv4.total_length);
+       printf("Identification          : 0x%04X\n", ipv4.identification);
 
-    printf("Version : %d\n",
-           ipv4.version);
+       printf("Flags                   : ");
+       printf("Reserved %d\n", (flags >> 2) & 1);
+       printf("                          DF       %d\n", (flags >> 1) & 1);
+       printf("                          MF       %d\n", (flags >> 0) & 1);
 
-    printf("Header Length : %d bytes\n",
-           ipv4.header_length);
+       printf("Fragment Offset         : %u\n", fragment_offset * 8);
 
-    printf("DSCP : %d\n",
-           ipv4.dscp);
+       printf("TTL                     : 0x%02x\n", ipv4.ttl);
+       printf("Protocol                : 0x%02x\n", ipv4.protocol);
+       printf("Header Checksum         : 0x%02x\n", ipv4.header_checksum);
 
-    printf("ECN : %d\n",
-           ipv4.ecn);
+       printf("Source IP Address       : ");
+       print_ip(ipv4.source_ip);
+       printf("\n");
 
-    printf("Total Length : %d\n",
-           ipv4.total_length);
+       printf("Destination IP Address  : ");
+       print_ip(ipv4.destination_ip);
+       printf("\n");
 
-    printf("Identification : %d\n",
-           ipv4.identification);
-
-    printf("Flags : %d\n",
-           ipv4.flags);
-
-    printf("Fragment Offset : %d\n",
-           ipv4.fragment_offset);
-
-    printf("TTL : %d\n",
-           ipv4.ttl);
-
-    printf("Protocol : %d\n",
-           ipv4.protocol);
-
-    printf("Header Checksum : 0x%04X\n",
-           ipv4.header_checksum);
-
-    printf("Source IP : %s\n",
-           inet_ntoa(source));
-
-    printf("Destination IP : %s\n",
-           inet_ntoa(destination));
-
-    if (ipv4.header_length > 20)
-    {
-        printf("Options : Exists\n");
-    }
-    else
-    {
-        printf("Options : None\n");
-    }
+       if (ihl > 5)
+       {
+              int options_length = (ihl - 5) * 4;
+              printf("Options (%d bytes)       : ", options_length);
+              for (int i = 0; i < options_length; i++)
+              {
+                     printf("%02X ", ipv4.options[i]);
+              }
+              printf("\n");
+       }
+       else
+       {
+              printf("Options                 : None\n");
+       }
 }
 
-void print_layer3(IPv4 ipv4)
+void print_layer3(Packet packet)
 {
-    print_ipv4(ipv4);
+       printf("\nLayer 3\n");
+       printf("-------------------------\n");
+       print_ipv4(packet.ipv4);
 }

@@ -35,6 +35,10 @@ int parse_ethernet(Packet *packet, size_t *offset)
         {
             return -1;
         }
+        if (parse_ipv4(packet, offset) != 0)
+        {
+            return -1;
+        }
     }
 
     return 0;

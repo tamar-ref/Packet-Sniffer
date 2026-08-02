@@ -27,7 +27,7 @@ void print_vlan(Vlan vlan)
 
     printf("Priority (PCP)          : %u\n", pcp);
     printf("DEI                     : %u\n", dei);
-    printf("VLAN ID (VID)           : %u\n", vid);
+    printf("VLAN ID                 : %u\n", vid);
 
     printf("EtherType               : 0x%04X\n", vlan.ether_type);
 }
