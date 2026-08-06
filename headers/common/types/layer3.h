@@ -39,6 +39,14 @@ typedef struct
     uint8_t destination_address[ADDRESS_SIZE];
 } IPv6;
 
+typedef struct
+{
+    uint8_t type;
+    uint8_t code;
+    uint16_t checksum;
+    uint32_t rest_of_header;
+} Icmp;
+
 #pragma pack(pop)
 
 #endif

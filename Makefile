@@ -17,6 +17,7 @@ main:
 		src/parser/layer2/arp.c \
 		src/parser/layer3/ipv4.c \
 		src/parser/layer3/ipv6.c \
+		src/parser/layer3/icmp.c \
 		src/parser/layer4/tcp.c \
 		src/parser/layer4/udp.c \
 	    -o src/main
