@@ -1,6 +1,6 @@
 #include "../../headers/printer/layer3.h"
 
-void print_ipv4(IPv4 ipv4)
+void print_ipv4(IPv4 ipv4, uint16_t *next_protocol)
 {
        printf("\nProtocol                : IPv4\n");
 
@@ -48,11 +48,51 @@ void print_ipv4(IPv4 ipv4)
        {
               printf("Options                 : None\n");
        }
+
+       *next_protocol = ipv4.protocol;
 }
 
-void print_layer3(Packet packet)
+void print_ipv6(IPv6 ipv6, uint16_t *next_protocol)
+{
+       printf("Protocol                : IPv6\n");
+
+       uint32_t version = ipv6.version_traffic_class_flow_label >> 28;
+       uint32_t traffic_class = (ipv6.version_traffic_class_flow_label >> 20) & 0xFF;
+       uint32_t flow_label = ipv6.version_traffic_class_flow_label & 0xFFFFF;
+
+       printf("Version                 : %u\n", version);
+       printf("Traffic Class           : 0x%02X\n", traffic_class);
+       printf("Flow Label              : 0x%05X\n", flow_label);
+
+       printf("Payload Length          : 0x%04x\n", ipv6.payload_length);
+       printf("Next Header             : 0x%02x\n", ipv6.next_header);
+       printf("Hop Limit               : 0x%02x\n", ipv6.hop_limit);
+
+       printf("Source IP Address       : ");
+       print_address(ipv6.source_address);
+       printf("\n");
+
+       printf("Destination IP Address  : ");
+       print_address(ipv6.destination_address);
+       printf("\n");
+
+       *next_protocol = ipv6.next_header;
+}
+
+void print_layer3(Packet packet, uint16_t *next_protocol)
 {
        printf("\nLayer 3\n");
        printf("-------------------------\n");
-       print_ipv4(packet.ipv4);
+       if (*next_protocol == IPV4_ETHERTYPE)
+       {
+              print_ipv4(packet.ipv4, next_protocol);
+       }
+       else if (*next_protocol == IPV6_ETHERTYPE)
+       {
+              print_ipv6(packet.ipv6, next_protocol);
+       }
+       else
+       {
+              printf("Unknown Layer 3 Protocol\n");
+       }
 }

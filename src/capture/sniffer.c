@@ -42,12 +42,7 @@ void start_sniffer()
 
         size_t offset = 0;
 
-        if (parse_ethernet(&packet, &offset) != 0)
-        {
-            printf("Ethernet Error\n");
-            continue;
-        }
-
+        parse_packet(&packet, &offset);
         print_packet(packet);
 
         counter++;
@@ -61,13 +56,16 @@ void start_sniffer()
 //     Packet packet;
 //     unsigned char test_packet[] =
 //         {
+//             // Eאthernet II
 //             0x01,0x02,0x03,0x04,0x05,0x06,
 //             0x07,0x08,0x09,0x10,0x11,0x12,
 //             0x81,0x00,
 
+//             // VLAN
 //             0xa0,0x0a,
 //             0x08,0x06,
 
+//             // ARP
 //             0x00,0x01,
 //             0x08,0x00,
 //             0x06,
@@ -78,6 +76,7 @@ void start_sniffer()
 //             0x00,0x00,0x00,0x00,0x00,0x00,
 //             0xc0,0xa8,0x01,0x14,
 
+//             //IPv4
 //             0x46,
 //             0x00,
 //             0x00, 0x28,
@@ -89,6 +88,15 @@ void start_sniffer()
 //             0xc0, 0xa8, 0x01, 0x0a,
 //             0xc0, 0xa8, 0x01, 0x14,
 //             0x01, 0x02, 0x03, 0x04,
+
+//             // IPv6
+//             // 0x60, 0x00, 0x03, 0xe8,
+//             // 0x00, 0x14,
+//             // 0x06,
+//             // 0x40,
+//             // 0x20, 0x01, 0x0d, 0x0b8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01,
+//             // 0x20, 0x01, 0x0d, 0x0b8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02,
+            
 //         };
 
 //     packet.length = sizeof(test_packet);
@@ -99,10 +107,6 @@ void start_sniffer()
 
 //     size_t offset = 0;
 
-//     if (parse_ethernet(&packet, &offset) != 0)
-//     {
-//         printf("Ethernet Error\n");
-//     }
-
+//     parse_packet(&packet, &offset);
 //     print_packet(packet);
 // }

@@ -11,11 +11,10 @@ typedef struct
     unsigned char payload[MAX_PACKET_SIZE];
     size_t length;
     Ethernet ethernet;
-    int has_vlan;
     Vlan vlan;
-    int has_arp;
     Arp arp;
     IPv4 ipv4;
+    IPv6 ipv6;
 } Packet;
 
 #endif

@@ -21,3 +21,20 @@ void print_ip(unsigned char ip[IP_ADDRESS_SIZE])
         ip[2],
         ip[3]);
 }
+
+void print_address(uint8_t address[ADDRESS_SIZE])
+{
+    for (int i = 0; i < ADDRESS_SIZE; i += 2)
+    {
+        uint16_t part =
+            ((uint16_t)address[i] << 8) |
+            address[i + 1];
+
+        printf("%04x", part);
+
+        if (i < ADDRESS_SIZE-2)
+        {
+            printf(":");
+        }
+    }
+}

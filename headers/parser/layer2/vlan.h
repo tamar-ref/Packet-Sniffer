@@ -7,6 +7,6 @@
 
 #include "../../common/types/packet.h"
 
-int parse_vlan(Packet *packet, size_t *offset);
+int parse_vlan(Packet *packet, size_t *offset, uint16_t *next_protocol);
 
 #endif

@@ -9,8 +9,9 @@ void print_packet(Packet packet)
 
     printf("Size: %zu bytes\n", packet.length);
 
-    print_layer2(packet);
-    print_layer3(packet);
+    uint16_t next_protocol;
+    print_layer2(packet, &next_protocol);
+    print_layer3(packet, &next_protocol);
 
     print_payload(packet.payload, packet.length);
 

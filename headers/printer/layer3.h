@@ -7,7 +7,8 @@
 #include "../common/types/packet.h"
 #include "../common/types/layer3.h"
 
-void print_ipv4(IPv4 ipv4);
-void print_layer3(Packet packet);
+void print_ipv4(IPv4 ipv4, uint16_t *next_protocol);
+void print_ipv6(IPv6 ipv6, uint16_t *next_protocol);
+void print_layer3(Packet packet, uint16_t *next_protocol);
 
 #endif

@@ -1,13 +1,12 @@
 #include "../../../headers/parser/layer2/vlan.h"
 
-int parse_vlan(Packet *packet, size_t *offset)
+int parse_vlan(Packet *packet, size_t *offset, uint16_t *next_protocol)
 {
     if (packet == NULL || offset == NULL)
     {
         return -1;
     }
 
-    packet->has_vlan = 1;
     packet->vlan.tpid = packet->ethernet.ether_type;
 
     memcpy(&packet->vlan.tci,
@@ -21,6 +20,8 @@ int parse_vlan(Packet *packet, size_t *offset)
            sizeof(packet->vlan.ether_type));
     packet->vlan.ether_type = ntohs(packet->vlan.ether_type);
     *offset += sizeof(packet->vlan.ether_type);
+
+    *next_protocol = packet->vlan.ether_type;
 
     return 0;
 }
