@@ -66,6 +66,16 @@ void print_tcp(Tcp tcp)
     }
 }
 
+void print_udp(Udp udp)
+{
+    printf("\nProtocol                : UDP\n");
+
+    printf("Source Port             : %u\n", udp.source_port);
+    printf("Destination Port        : %u\n", udp.destination_port);
+    printf("Length                  : %u bytes\n", udp.length);
+    printf("Checksum                : 0x%04X\n", udp.checksum);
+}
+
 void print_layer4(Packet packet)
 {
     printf("\nLayer 4\n");
@@ -74,5 +84,9 @@ void print_layer4(Packet packet)
     if (packet.has_tcp)
     {
         print_tcp(packet.tcp);
+    }
+    else if (packet.has_udp)
+    {
+        print_udp(packet.udp);
     }
 }

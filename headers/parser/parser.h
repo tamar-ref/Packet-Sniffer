@@ -11,6 +11,7 @@
 #include "./layer3/ipv4.h"
 #include "./layer3/ipv6.h"
 #include "./layer4/tcp.h"
+#include "./layer4/udp.h"
 
 int parse_layer2(Packet *packet, size_t *offset, uint16_t *next_protocol);
 int parse_layer3(Packet *packet, size_t *offset, uint16_t *next_protocol);

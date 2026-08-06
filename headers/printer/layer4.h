@@ -9,6 +9,7 @@
 #include "../common/types/layer4.h"
 
 void print_tcp(Tcp tcp);
+void print_udp(Udp udp);
 void print_layer4(Packet packet);
 
 #endif

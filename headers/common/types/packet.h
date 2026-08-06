@@ -22,6 +22,8 @@ typedef struct
     IPv6 ipv6;
     int has_tcp;
     Tcp tcp;
+    int has_udp;
+    Udp udp;
 } Packet;
 
 #endif

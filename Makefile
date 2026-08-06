@@ -18,4 +18,5 @@ main:
 		src/parser/layer3/ipv4.c \
 		src/parser/layer3/ipv6.c \
 		src/parser/layer4/tcp.c \
+		src/parser/layer4/udp.c \
 	    -o src/main
