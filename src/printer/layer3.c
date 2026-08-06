@@ -1,6 +1,6 @@
 #include "../../headers/printer/layer3.h"
 
-void print_ipv4(IPv4 ipv4)
+void print_ipv4(IPv4 ipv4, uint16_t *next_protocol)
 {
        printf("\nProtocol                : IPv4\n");
 
@@ -48,9 +48,11 @@ void print_ipv4(IPv4 ipv4)
        {
               printf("Options                 : None\n");
        }
+
+       *next_protocol = ipv4.protocol;
 }
 
-void print_ipv6(IPv6 ipv6)
+void print_ipv6(IPv6 ipv6, uint16_t *next_protocol)
 {
        printf("Protocol                : IPv6\n");
 
@@ -73,22 +75,21 @@ void print_ipv6(IPv6 ipv6)
        printf("Destination IP Address  : ");
        print_address(ipv6.destination_address);
        printf("\n");
+
+       *next_protocol = ipv6.next_header;
 }
 
-void print_layer3(Packet packet)
+void print_layer3(Packet packet, uint16_t *next_protocol)
 {
        printf("\nLayer 3\n");
        printf("-------------------------\n");
-       uint16_t ether_type = packet.has_vlan
-                                 ? packet.vlan.ether_type
-                                 : packet.ethernet.ether_type;
-       if (ether_type == ARP_ETHERTYPE)
+       if (*next_protocol == IPV4_ETHERTYPE)
        {
-              print_ipv4(packet.ipv4);
+              print_ipv4(packet.ipv4, next_protocol);
        }
-       else if (ether_type == IPV6_ETHERTYPE)
+       else if (*next_protocol == IPV6_ETHERTYPE)
        {
-              print_ipv6(packet.ipv6);
+              print_ipv6(packet.ipv6, next_protocol);
        }
        else
        {

@@ -11,7 +11,6 @@ typedef struct
     unsigned char payload[MAX_PACKET_SIZE];
     size_t length;
     Ethernet ethernet;
-    int has_vlan;
     Vlan vlan;
     Arp arp;
     IPv4 ipv4;

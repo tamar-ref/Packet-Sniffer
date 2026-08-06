@@ -10,6 +10,7 @@ main:
 		src/printer/layer2.c \
 		src/printer/layer3.c \
 		src/printer/payload.c \
+		src/parser/parser.c \
 		src/parser/layer2/ethernet.c \
 		src/parser/layer2/vlan.c \
 		src/parser/layer2/arp.c \

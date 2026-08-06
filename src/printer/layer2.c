@@ -1,6 +1,6 @@
 #include "../../headers/printer/layer2.h"
 
-void print_ethernet(Ethernet ethernet)
+void print_ethernet(Ethernet ethernet, uint16_t *next_protocol)
 {
     printf("Protocol                : Ethernet II\n");
 
@@ -13,9 +13,11 @@ void print_ethernet(Ethernet ethernet)
     printf("\n");
 
     printf("EtherType               : 0x%04X\n", ethernet.ether_type);
+
+    *next_protocol = ethernet.ether_type;
 }
 
-void print_vlan(Vlan vlan)
+void print_vlan(Vlan vlan, uint16_t *next_protocol)
 {
     uint16_t pcp = (vlan.tci >> 13) & 0x07;
     uint16_t dei = (vlan.tci >> 12) & 0x01;
@@ -30,9 +32,11 @@ void print_vlan(Vlan vlan)
     printf("VLAN ID                 : %u\n", vid);
 
     printf("EtherType               : 0x%04X\n", vlan.ether_type);
+
+    *next_protocol = vlan.ether_type;
 }
 
-void print_arp(Arp arp)
+void print_arp(Arp arp, uint16_t *next_protocol)
 {
     printf("\nProtocol                : ARP\n");
 
@@ -57,22 +61,24 @@ void print_arp(Arp arp)
     printf("Target Protocol Address : ");
     print_ip(arp.tpa);
     printf("\n");
+
+    *next_protocol = IPV4_ETHERTYPE;
 }
 
-void print_layer2(Packet packet)
+void print_layer2(Packet packet, uint16_t *next_protocol)
 {
     printf("\nLayer 2\n");
     printf("-------------------------\n");
 
-    print_ethernet(packet.ethernet);
+    print_ethernet(packet.ethernet, next_protocol);
 
-    if (packet.has_vlan)
+    if (*next_protocol == TPID)
     {
-        print_vlan(packet.vlan);
+        print_vlan(packet.vlan, next_protocol);
     }
 
-    if ((packet.has_vlan ? packet.vlan.ether_type : packet.ethernet.ether_type) == ARP_ETHERTYPE)
+    if (*next_protocol == ARP_ETHERTYPE)
     {
-        print_arp(packet.arp);
+        print_arp(packet.arp, next_protocol);
     }
 }

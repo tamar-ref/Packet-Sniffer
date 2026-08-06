@@ -6,6 +6,6 @@
 
 #include "../../common/types/packet.h"
 
-int parse_ipv6(Packet *packet, size_t *offset);
+int parse_ipv6(Packet *packet, size_t *offset, uint16_t *next_protocol);
 
 #endif

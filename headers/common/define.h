@@ -9,6 +9,7 @@
 #define TPID 0x8100
 #define ARP_ETHERTYPE 0x0806
 
+#define IPV4_ETHERTYPE 0x0800
 #define MAX_OPTIONS_SIZE 40
 
 #define IPV6_ETHERTYPE 0x86dd

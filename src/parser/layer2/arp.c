@@ -1,6 +1,6 @@
 #include "../../../headers/parser/layer2/arp.h"
 
-int parse_arp(Packet *packet, size_t *offset)
+int parse_arp(Packet *packet, size_t *offset, uint16_t *next_protocol)
 {
     if (packet == NULL || offset == NULL)
     {
@@ -16,6 +16,7 @@ int parse_arp(Packet *packet, size_t *offset)
     packet->arp.opcode = ntohs(packet->arp.opcode);
 
     *offset += sizeof(packet->arp);
+    *next_protocol = IPV4_ETHERTYPE;
 
     return 0;
 }

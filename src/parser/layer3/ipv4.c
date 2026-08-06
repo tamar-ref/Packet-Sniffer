@@ -1,6 +1,6 @@
 #include "../../../headers/parser/layer3/ipv4.h"
 
-int parse_ipv4(Packet *packet, size_t *offset)
+int parse_ipv4(Packet *packet, size_t *offset, uint16_t *next_protocol)
 {
     if (packet == NULL || offset == NULL)
     {
@@ -17,6 +17,7 @@ int parse_ipv4(Packet *packet, size_t *offset)
     packet->ipv4.header_checksum = ntohs(packet->ipv4.header_checksum);
 
     *offset += sizeof(packet->ipv4);
+    *next_protocol = packet->ipv4.protocol;
 
     return 0;
 }

@@ -1,6 +1,6 @@
 #include "../../../headers/parser/layer3/ipv6.h"
 
-int parse_ipv6(Packet *packet, size_t *offset)
+int parse_ipv6(Packet *packet, size_t *offset, uint16_t *next_protocol)
 {
     if (packet == NULL || offset == NULL)
     {
@@ -15,6 +15,7 @@ int parse_ipv6(Packet *packet, size_t *offset)
     packet->ipv6.payload_length = ntohs(packet->ipv6.payload_length);
 
     *offset += sizeof(packet->ipv6);
+    *next_protocol = packet->ipv6.next_header;
 
     return 0;
 }
