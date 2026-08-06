@@ -1,5 +1,5 @@
-#ifndef IPV4
-#define IPV4
+#ifndef IPV4_H
+#define IPV4_H
 
 #include <string.h>
 #include <arpa/inet.h>

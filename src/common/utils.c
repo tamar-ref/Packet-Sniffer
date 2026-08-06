@@ -32,9 +32,18 @@ void print_address(uint8_t address[ADDRESS_SIZE])
 
         printf("%04x", part);
 
-        if (i < ADDRESS_SIZE-2)
+        if (i < ADDRESS_SIZE - 2)
         {
             printf(":");
         }
+    }
+}
+
+void print_bits(uint16_t value, int bits)
+{
+    printf("0b");
+    for (int i = bits - 1; i >= 0; i--)
+    {
+        printf("%u", (value >> i) & 1);
     }
 }

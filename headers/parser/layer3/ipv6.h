@@ -1,5 +1,5 @@
-#ifndef IPV6
-#define IPV6
+#ifndef IPV6_H
+#define IPV6_H
 
 #include <string.h>
 #include <arpa/inet.h>

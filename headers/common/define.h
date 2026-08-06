@@ -15,4 +15,7 @@
 #define IPV6_ETHERTYPE 0x86dd
 #define ADDRESS_SIZE 16
 
+#define TCP_PROTOCOL 0x06
+#define RESERVED_BITS 3
+
 #endif

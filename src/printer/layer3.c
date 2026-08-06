@@ -7,18 +7,22 @@ void print_ipv4(IPv4 ipv4)
        uint8_t version = ipv4.version_ihl >> 4;
        uint8_t ihl = ipv4.version_ihl & 0x0F;
 
-       uint16_t flags = (ipv4.flags_fragment_offset >> 13) & 0x07;
-       uint16_t fragment_offset = ipv4.flags_fragment_offset & 0x1FFF;
-
        printf("Version                 : %u\n", version);
        printf("IHL                     : %u bytes\n", ihl * 4);
        printf("Total Length            : 0x%04x\n", ipv4.total_length);
        printf("Identification          : 0x%04X\n", ipv4.identification);
 
+       uint16_t flags = (ipv4.flags_fragment_offset >> 13) & 0x07;
+       uint16_t fragment_offset = ipv4.flags_fragment_offset & 0x1FFF;
+
+       uint8_t reserved = (flags >> 2) & 1;
+       uint8_t df = (flags >> 1) & 1;
+       uint8_t mf = flags & 1;
+
        printf("Flags                   : ");
-       printf("Reserved %d\n", (flags >> 2) & 1);
-       printf("                          DF       %d\n", (flags >> 1) & 1);
-       printf("                          MF       %d\n", (flags >> 0) & 1);
+       printf("Reserved %d\n", reserved);
+       printf("                          DF       %d\n", df);
+       printf("                          MF       %d\n", mf);
 
        printf("Fragment Offset         : %u\n", fragment_offset * 8);
 
@@ -79,6 +83,7 @@ void print_layer3(Packet packet)
 {
        printf("\nLayer 3\n");
        printf("-------------------------\n");
+
        if (packet.has_ipv4)
        {
               print_ipv4(packet.ipv4);
