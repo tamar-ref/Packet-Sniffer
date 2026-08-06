@@ -18,4 +18,6 @@
 #define TCP_PROTOCOL 0x06
 #define RESERVED_BITS 3
 
+#define UDP_PROTOCOL 0x11
+
 #endif
