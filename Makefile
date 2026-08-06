@@ -14,4 +14,5 @@ main:
 		src/parser/layer2/vlan.c \
 		src/parser/layer2/arp.c \
 		src/parser/layer3/ipv4.c \
+		src/parser/layer3/ipv6.c \
 	    -o src/main

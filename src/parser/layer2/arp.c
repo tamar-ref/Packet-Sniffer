@@ -7,8 +7,6 @@ int parse_arp(Packet *packet, size_t *offset)
         return -1;
     }
 
-    packet->has_arp = 1;
-
     memcpy(&packet->arp,
            packet->payload + *offset,
            sizeof(packet->arp));

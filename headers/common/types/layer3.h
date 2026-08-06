@@ -28,14 +28,15 @@ typedef struct
 
 typedef struct
 {
-    uint32_t version : 4;
-    uint32_t traffic_class : 8;
-    uint32_t flow_label : 20;
+    uint32_t version_traffic_class_flow_label;
+    // version : 4
+    // traffic_class : 8
+    // flow_label : 20
     uint16_t payload_length;
     uint8_t next_header;
     uint8_t hop_limit;
-    uint8_t source_address[16];
-    uint8_t destination_address[16];
+    uint8_t source_address[ADDRESS_SIZE];
+    uint8_t destination_address[ADDRESS_SIZE];
 } IPv6;
 
 #pragma pack(pop)

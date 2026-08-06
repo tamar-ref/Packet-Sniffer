@@ -11,4 +11,7 @@
 
 #define MAX_OPTIONS_SIZE 40
 
+#define IPV6_ETHERTYPE 0x86dd
+#define ADDRESS_SIZE 16
+
 #endif

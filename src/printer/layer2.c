@@ -70,7 +70,8 @@ void print_layer2(Packet packet)
     {
         print_vlan(packet.vlan);
     }
-    if (packet.has_arp)
+
+    if ((packet.has_vlan ? packet.vlan.ether_type : packet.ethernet.ether_type) == ARP_ETHERTYPE)
     {
         print_arp(packet.arp);
     }

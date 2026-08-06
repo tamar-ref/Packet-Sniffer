@@ -40,6 +40,13 @@ int parse_ethernet(Packet *packet, size_t *offset)
             return -1;
         }
     }
+    else if (ether_type == IPV6_ETHERTYPE)
+    {
+        if (parse_ipv6(packet, offset) != 0)
+        {
+            return -1;
+        }
+    }
 
     return 0;
 }

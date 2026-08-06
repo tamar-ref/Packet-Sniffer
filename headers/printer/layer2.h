@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 
+#include "../common/define.h"
 #include "../common/utils.h"
 #include "../common/types/layer2.h"
 #include "../common/types/packet.h"

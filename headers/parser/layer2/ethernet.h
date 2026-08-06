@@ -9,6 +9,7 @@
 #include "vlan.h"
 #include "arp.h"
 #include "../layer3/ipv4.h"
+#include "../layer3/ipv6.h"
 
 int parse_ethernet(Packet *packet, size_t *offset);
 
