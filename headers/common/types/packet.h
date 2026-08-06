@@ -4,6 +4,7 @@
 #include "../define.h"
 #include "layer2.h"
 #include "layer3.h"
+#include "layer4.h"
 
 typedef struct
 {
@@ -19,6 +20,8 @@ typedef struct
     IPv4 ipv4;
     int has_ipv6;
     IPv6 ipv6;
+    int has_tcp;
+    Tcp tcp;
 } Packet;
 
 #endif

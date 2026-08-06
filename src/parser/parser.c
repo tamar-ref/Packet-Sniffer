@@ -52,6 +52,25 @@ int parse_layer3(Packet *packet, size_t *offset, uint16_t *next_protocol)
     return 0;
 }
 
+int parse_layer4(Packet *packet, size_t *offset, uint16_t *next_protocol)
+{
+    if (*next_protocol == TCP_PROTOCOL)
+    {
+        if (parse_tcp(packet, offset) != 0)
+        {
+            printf("TCP Error\n");
+            return -1;
+        }
+    }
+    else
+    {
+        printf("Unknown Layer 4 Protocol: 0x%04X\n", *next_protocol);
+        return -1;
+    }
+
+    return 0;
+}
+
 void parse_packet(Packet *packet, size_t *offset)
 {
     uint16_t next_protocol;
@@ -65,6 +84,12 @@ void parse_packet(Packet *packet, size_t *offset)
     if (parse_layer3(packet, offset, &next_protocol) != 0)
     {
         printf("Layer 3 Error\n");
+        return;
+    }
+
+    if (parse_layer4(packet, offset, &next_protocol) != 0)
+    {
+        printf("Layer 4 Error\n");
         return;
     }
 }
