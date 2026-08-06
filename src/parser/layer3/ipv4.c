@@ -7,6 +7,8 @@ int parse_ipv4(Packet *packet, size_t *offset, uint16_t *next_protocol)
         return -1;
     }
 
+    packet->has_ipv4 = 1;
+    
     memcpy(&packet->ipv4,
            packet->payload + *offset,
            sizeof(packet->ipv4));

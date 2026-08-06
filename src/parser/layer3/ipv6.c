@@ -7,6 +7,8 @@ int parse_ipv6(Packet *packet, size_t *offset, uint16_t *next_protocol)
         return -1;
     }
 
+    packet->has_ipv6 = 1;
+
     memcpy(&packet->ipv6,
            packet->payload + *offset,
            sizeof(packet->ipv6));

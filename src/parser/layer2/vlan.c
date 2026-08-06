@@ -7,6 +7,7 @@ int parse_vlan(Packet *packet, size_t *offset, uint16_t *next_protocol)
         return -1;
     }
 
+    packet->has_vlan = 1;
     packet->vlan.tpid = packet->ethernet.ether_type;
 
     memcpy(&packet->vlan.tci,
