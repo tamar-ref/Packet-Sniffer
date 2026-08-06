@@ -10,6 +10,7 @@
 #include "./layer2/vlan.h"
 #include "./layer3/ipv4.h"
 #include "./layer3/ipv6.h"
+#include "./layer3/icmp.h"
 #include "./layer4/tcp.h"
 #include "./layer4/udp.h"
 
