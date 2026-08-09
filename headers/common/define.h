@@ -17,6 +17,8 @@
 
 #define ICMP_PROTOCOL 0x01
 
+#define ICMPV6_PROTOCOL 0x3a
+
 #define TCP_PROTOCOL 0x06
 #define RESERVED_BITS 3
 

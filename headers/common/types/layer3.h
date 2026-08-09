@@ -47,6 +47,14 @@ typedef struct
     uint32_t rest_of_header;
 } Icmp;
 
+typedef struct
+{
+    uint8_t type;
+    uint8_t code;
+    uint16_t checksum;
+    uint32_t data;
+} Icmpv6;
+
 #pragma pack(pop)
 
 #endif

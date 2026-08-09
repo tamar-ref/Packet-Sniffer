@@ -8,20 +8,17 @@ int parse_vlan(Packet *packet, size_t *offset, uint16_t *next_protocol)
     }
 
     packet->has_vlan = 1;
-    packet->vlan.tpid = packet->ethernet.ether_type;
+    *offset -= sizeof(packet->ethernet.ether_type);
 
-    memcpy(&packet->vlan.tci,
+    memcpy(&packet->vlan,
            packet->payload + *offset,
-           sizeof(packet->vlan.tci));
+           sizeof(packet->vlan));
+
+    packet->vlan.tpid = ntohs(packet->vlan.tpid);
     packet->vlan.tci = ntohs(packet->vlan.tci);
-    *offset += sizeof(packet->vlan.tci);
-
-    memcpy(&packet->vlan.ether_type,
-           packet->payload + *offset,
-           sizeof(packet->vlan.ether_type));
     packet->vlan.ether_type = ntohs(packet->vlan.ether_type);
-    *offset += sizeof(packet->vlan.ether_type);
-
+    
+    *offset += sizeof(packet->vlan);
     *next_protocol = packet->vlan.ether_type;
 
     return 0;

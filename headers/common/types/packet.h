@@ -24,6 +24,8 @@ typedef struct
     IPv6 ipv6;
     int has_icmp;
     Icmp icmp;
+    int has_icmpv6;
+    Icmpv6 icmpv6;
 
     int has_tcp;
     Tcp tcp;
