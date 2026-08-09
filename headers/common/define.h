@@ -17,11 +17,29 @@
 
 #define ICMP_PROTOCOL 0x01
 
-#define ICMPV6_PROTOCOL 0x3a
+#define ICMPV6_PROTOCOL 58
 
 #define TCP_PROTOCOL 0x06
 #define RESERVED_BITS 3
 
-#define UDP_PROTOCOL 0x11
+#define UDP_PROTOCOL 17
+
+#define HTTP_PORT 80
+
+#define HTTPS_PORT 443
+
+#define DNS_PORT 53
+
+#define SERVER_DHCP_PORT 67
+#define CLIENT_DHCP_PORT 68
+
+#define CONTROL_FTP_PORT 21
+#define ACTIVE_FTP_PORT 20
+
+#define SSH_PORT 22
+
+#define NTP_PORT 123
+
+#define TELNET_PORT 23
 
 #endif

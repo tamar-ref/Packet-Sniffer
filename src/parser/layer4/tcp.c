@@ -1,6 +1,6 @@
 #include "../../../headers/parser/layer4/tcp.h"
 
-int parse_tcp(Packet *packet, size_t *offset)
+int parse_tcp(Packet *packet, size_t *offset, uint16_t *next_protocol)
 {
        if (packet == NULL || offset == NULL)
        {
@@ -31,6 +31,8 @@ int parse_tcp(Packet *packet, size_t *offset)
                      (data_offset - 5) * 4);
               *offset += (data_offset - 5) * 4;
        }
+
+       *next_protocol = packet->tcp.destination_port;
 
        return 0;
 }
