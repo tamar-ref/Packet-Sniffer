@@ -1,6 +1,6 @@
 #include "../../../headers/parser/layer4/udp.h"
 
-int parse_udp(Packet *packet, size_t *offset)
+int parse_udp(Packet *packet, size_t *offset, uint16_t *next_protocol)
 {
     if (packet == NULL || offset == NULL)
     {
@@ -19,6 +19,8 @@ int parse_udp(Packet *packet, size_t *offset)
     packet->udp.checksum = ntohs(packet->udp.checksum);
 
     *offset += sizeof(packet->udp);
+
+    *next_protocol = packet->udp.destination_port;
 
     return 0;
 }
