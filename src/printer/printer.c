@@ -11,7 +11,7 @@ void print_packet(Packet packet)
 
     print_layer2(packet);
     print_layer3(packet);
-    if (!packet.has_icmp)
+    if (!packet.has_icmp && !packet.has_icmpv6)
     {
         print_layer4(packet);
     }

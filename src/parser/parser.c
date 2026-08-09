@@ -34,6 +34,14 @@ int parse_layer3(Packet *packet, size_t *offset, uint16_t *next_protocol)
             printf("IPv4 Error\n");
             return -1;
         }
+        if (*next_protocol == ICMP_PROTOCOL)
+        {
+            if (parse_icmp(packet, offset) != 0)
+            {
+                printf("ICMP Error\n");
+                return -1;
+            }
+        }
     }
     else if (*next_protocol == IPV6_ETHERTYPE)
     {
@@ -42,20 +50,19 @@ int parse_layer3(Packet *packet, size_t *offset, uint16_t *next_protocol)
             printf("IPv6 Error\n");
             return -1;
         }
+        if (*next_protocol == ICMPV6_PROTOCOL)
+        {
+            if (parse_icmpv6(packet, offset) != 0)
+            {
+                printf("ICMPv6 Error\n");
+                return -1;
+            }
+        }
     }
     else
     {
         printf("Unknown Layer 3 Protocol: 0x%04X\n", *next_protocol);
         return -1;
-    }
-
-    if (*next_protocol == ICMP_PROTOCOL)
-    {
-        if (parse_icmp(packet, offset) != 0)
-        {
-            printf("ICMP Error\n");
-            return -1;
-        }
     }
 
     return 0;
@@ -103,13 +110,14 @@ void parse_packet(Packet *packet, size_t *offset)
     packet->has_ipv4 = 0;
     packet->has_ipv6 = 0;
     packet->has_icmp = 0;
+    packet->has_icmpv6 = 0;
     if (parse_layer3(packet, offset, &next_protocol) != 0)
     {
         printf("Layer 3 Error\n");
         return;
     }
 
-    if (packet->has_icmp)
+    if (packet->has_icmp || packet->has_icmpv6)
     {
         return;
     }

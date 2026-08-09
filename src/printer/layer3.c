@@ -89,6 +89,16 @@ void print_icmp(Icmp icmp)
        printf("Rest Of Header          : 0x%08X\n", icmp.rest_of_header);
 }
 
+void print_icmpv6(Icmpv6 icmpv6)
+{
+       printf("\nProtocol                : ICMPv6\n");
+
+       printf("Type                    : 0x%02X\n", icmpv6.type);
+       printf("Code                    : 0x%02X\n", icmpv6.code);
+       printf("Checksum                : 0x%04X\n", icmpv6.checksum);
+       printf("Data                    : 0x%08X\n", icmpv6.data);
+}
+
 void print_layer3(Packet packet)
 {
        printf("\nLayer 3\n");
@@ -97,14 +107,17 @@ void print_layer3(Packet packet)
        if (packet.has_ipv4)
        {
               print_ipv4(packet.ipv4);
+              if (packet.has_icmp)
+              {
+                     print_icmp(packet.icmp);
+              }
        }
        else if (packet.has_ipv6)
        {
               print_ipv6(packet.ipv6);
-       }
-
-       if (packet.has_icmp)
-       {
-              print_icmp(packet.icmp);
+              if (packet.has_icmpv6)
+              {
+                     print_icmpv6(packet.icmpv6);
+              }
        }
 }
