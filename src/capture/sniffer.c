@@ -56,7 +56,7 @@ void start_sniffer()
 //     Packet packet;
 //     unsigned char test_packet[] =
 //         {
-//             // Eאthernet II
+//             // Ethernet II
 //             0x01,0x02,0x03,0x04,0x05,0x06,
 //             0x07,0x08,0x09,0x10,0x11,0x12,
 //             0x81,0x00,

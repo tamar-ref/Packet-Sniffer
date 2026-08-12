@@ -2,28 +2,26 @@
 
 void print_http(Http http)
 {
-    printf("\nProtocol                : HTTP\n");
+    printf("\n%-*s: HTTP\n", PRINT_LABEL_WIDTH, "Protocol");
 
     if (http.is_request)
     {
-        printf("Method                  : %s\n", http.method);
-        printf("URI                     : %s\n", http.uri);
-        printf("Version                 : %s\n", http.version);
+        printf("%-*s: %s\n", PRINT_LABEL_WIDTH, "Method", http.method);
+        printf("%-*s: %s\n", PRINT_LABEL_WIDTH, "URI", http.uri);
+        printf("%-*s: %s\n", PRINT_LABEL_WIDTH, "Version", http.version);
     }
     else if (http.is_response)
     {
-        printf("Version                 : %s\n", http.version);
-        printf("Stat code               : %d\n", http.status_code);
-        printf("Status text             : %s\n", http.status_text);
+        printf("%-*s: %s\n", PRINT_LABEL_WIDTH, "Version", http.version);
+        printf("%-*s: %d\n", PRINT_LABEL_WIDTH, "Status Code", http.status_code);
+        printf("%-*s: %s\n", PRINT_LABEL_WIDTH, "Status Text", http.status_text);
     }
 
     printf("Headers\n");
 
     for (int i = 0; i < http.header_count; i++)
     {
-        printf("%-24s: %s\n",
-               http.headers[i].name,
-               http.headers[i].value);
+        printf("%-*s: %s\n", PRINT_LABEL_WIDTH, http.headers[i].name, http.headers[i].value);
     }
 }
 

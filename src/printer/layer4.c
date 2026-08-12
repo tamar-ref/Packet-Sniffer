@@ -2,19 +2,20 @@
 
 void print_tcp(Tcp tcp)
 {
-    printf("\nProtocol                : TCP\n");
+    printf("\n%-*s: TCP\n", PRINT_LABEL_WIDTH, "Protocol");
 
-    printf("Source Port             : %u\n", tcp.source_port);
-    printf("Destination Port        : %u\n", tcp.destination_port);
-    printf("Sequence Number         : 0x%08X\n", tcp.sequence_number);
-    printf("Acknowledgment Number   : 0x%08X\n", tcp.acknowledgment_number);
+    printf("%-*s: %u\n", PRINT_LABEL_WIDTH, "Source Port", tcp.source_port);
+    printf("%-*s: %u\n", PRINT_LABEL_WIDTH, "Destination Port", tcp.destination_port);
+    printf("%-*s: 0x%08x\n", PRINT_LABEL_WIDTH, "Sequence Number", tcp.sequence_number);
+    printf("%-*s: 0x%08x\n", PRINT_LABEL_WIDTH, "Acknowledgment Number", tcp.acknowledgment_number);
 
     uint16_t data_offset = (tcp.data_offset_reserved_flags >> 12) & 0x0F;
     uint16_t reserved = (tcp.data_offset_reserved_flags >> 9) & 0x07;
     uint16_t flags = tcp.data_offset_reserved_flags & 0x01FF;
 
-    printf("Data Offset             : %u bytes\n", data_offset * 4);
-    printf("Reserved                : ");
+    printf("%-*s: %u bytes\n", PRINT_LABEL_WIDTH, "Data Offset", data_offset * 4);
+
+    printf("%-*s: ", PRINT_LABEL_WIDTH, "Reserved");
     print_bits(reserved, RESERVED_BITS);
     printf("\n");
 
@@ -28,32 +29,33 @@ void print_tcp(Tcp tcp)
     uint8_t syn = (flags >> 1) & 1;
     uint8_t fin = flags & 1;
 
-    printf("Flags                   : ");
-    printf("NS  %d\n", ns);
-    printf("                          CWR %d\n", cwr);
-    printf("                          ECE %d\n", ece);
-    printf("                          URG %d\n", urg);
-    printf("                          ACK %d\n", ack);
-    printf("                          PSH %d\n", psh);
-    printf("                          RST %d\n", rst);
-    printf("                          SYN %d\n", syn);
-    printf("                          FIN %d\n", fin);
+    printf("%-*s: ", PRINT_LABEL_WIDTH, "Flags");
+    int max_flag_length = (int)strlen("CWR") + 1;
+    printf("%-*s %d\n", max_flag_length - 1, "NS", ns);
+    printf("%*s %-*s%d\n", PRINT_LABEL_WIDTH + 1, "", max_flag_length, "CWR", cwr);
+    printf("%*s %-*s%d\n", PRINT_LABEL_WIDTH + 1, "", max_flag_length, "ECE", ece);
+    printf("%*s %-*s%d\n", PRINT_LABEL_WIDTH + 1, "", max_flag_length, "URG", urg);
+    printf("%*s %-*s%d\n", PRINT_LABEL_WIDTH + 1, "", max_flag_length, "ACK", ack);
+    printf("%*s %-*s%d\n", PRINT_LABEL_WIDTH + 1, "", max_flag_length, "PSH", psh);
+    printf("%*s %-*s%d\n", PRINT_LABEL_WIDTH + 1, "", max_flag_length, "RST", rst);
+    printf("%*s %-*s%d\n", PRINT_LABEL_WIDTH + 1, "", max_flag_length, "SYN", syn);
+    printf("%*s %-*s%d\n", PRINT_LABEL_WIDTH + 1, "", max_flag_length, "FIN", fin);
 
-    printf("Window Size             : 0x%04X\n", tcp.window_size);
-    printf("Checksum                : 0x%04X\n", tcp.checksum);
-    printf("Urgent Pointer          : 0x%04X\n", tcp.urgent_pointer);
+    printf("%-*s: 0x%04x\n", PRINT_LABEL_WIDTH, "Window Size", tcp.window_size);
+    printf("%-*s: 0x%04x\n", PRINT_LABEL_WIDTH, "Checksum", tcp.checksum);
+    printf("%-*s: 0x%04x\n", PRINT_LABEL_WIDTH, "Urgent Pointer", tcp.urgent_pointer);
 
     if (data_offset > 5)
     {
         int options_length = (data_offset - 5) * 4;
-        if (options_length > 9)
-        {
-            printf("Options (%d bytes)      : ", options_length);
-        }
-        else
-        {
-            printf("Options (%d bytes)       : ", options_length);
-        }
+
+        char options_string[PRINT_LABEL_WIDTH];
+        snprintf(options_string,
+                 sizeof(options_string),
+                 "Options (%d bytes)",
+                 options_length);
+        printf("%-*s: ", PRINT_LABEL_WIDTH, options_string);
+
         for (int i = 0; i < options_length; i++)
         {
             printf("%02X ", tcp.options[i]);
@@ -62,18 +64,18 @@ void print_tcp(Tcp tcp)
     }
     else
     {
-        printf("Options                 : None\n");
+        printf("%-*s: None\n", PRINT_LABEL_WIDTH, "Options");
     }
 }
 
 void print_udp(Udp udp)
 {
-    printf("\nProtocol                : UDP\n");
+    printf("\n%-*s: UDP\n", PRINT_LABEL_WIDTH, "Protocol");
 
-    printf("Source Port             : %u\n", udp.source_port);
-    printf("Destination Port        : %u\n", udp.destination_port);
-    printf("Length                  : %u bytes\n", udp.length);
-    printf("Checksum                : 0x%04X\n", udp.checksum);
+    printf("%-*s: %u\n", PRINT_LABEL_WIDTH, "Source Port", udp.source_port);
+    printf("%-*s: %u\n", PRINT_LABEL_WIDTH, "Destination Port", udp.destination_port);
+    printf("%-*s: %u\n", PRINT_LABEL_WIDTH, "Length", udp.length);
+    printf("%-*s: 0x%04x\n", PRINT_LABEL_WIDTH, "Checksum", udp.checksum);
 }
 
 void print_layer4(Packet packet)

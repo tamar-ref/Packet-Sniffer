@@ -2,6 +2,7 @@
 #define LAYER_4_PRINTER_H
 
 #include <stdio.h>
+#include <string.h>
 
 #include "../common/utils.h"
 #include "../common/define.h"

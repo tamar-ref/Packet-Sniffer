@@ -1,15 +1,7 @@
 #ifndef LAYER5_7_TYPE_H
 #define LAYER5_7_TYPE_H
 
-#define MAX_HTTP_HEADERS 50
-
-#define HTTP_METHOD_SIZE 16
-#define HTTP_URI_SIZE 1024
-#define HTTP_VERSION_SIZE 16
-#define HTTP_STATUS_TEXT_SIZE 128
-
-#define HTTP_HEADER_NAME_SIZE 128
-#define HTTP_HEADER_VALUE_SIZE 1024
+#include "../define.h"
 
 typedef struct
 {

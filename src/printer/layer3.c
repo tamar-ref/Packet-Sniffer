@@ -2,15 +2,15 @@
 
 void print_ipv4(IPv4 ipv4)
 {
-       printf("\nProtocol                : IPv4\n");
+       printf("\n%-*s: IPv4\n", PRINT_LABEL_WIDTH, "Protocol");
 
        uint8_t version = ipv4.version_ihl >> 4;
        uint8_t ihl = ipv4.version_ihl & 0x0F;
 
-       printf("Version                 : %u\n", version);
-       printf("IHL                     : %u bytes\n", ihl * 4);
-       printf("Total Length            : 0x%04x\n", ipv4.total_length);
-       printf("Identification          : 0x%04X\n", ipv4.identification);
+       printf("%-*s: %u\n", PRINT_LABEL_WIDTH, "Version", version);
+       printf("%-*s: %u bytes\n", PRINT_LABEL_WIDTH, "IHL", ihl * 4);
+       printf("%-*s: 0x%04X\n", PRINT_LABEL_WIDTH, "Total Length", ipv4.total_length);
+       printf("%-*s: 0x%04X\n", PRINT_LABEL_WIDTH, "Identification", ipv4.identification);
 
        uint16_t flags = (ipv4.flags_fragment_offset >> 13) & 0x07;
        uint16_t fragment_offset = ipv4.flags_fragment_offset & 0x1FFF;
@@ -19,36 +19,36 @@ void print_ipv4(IPv4 ipv4)
        uint8_t df = (flags >> 1) & 1;
        uint8_t mf = flags & 1;
 
-       printf("Flags                   : ");
-       printf("Reserved %d\n", reserved);
-       printf("                          DF       %d\n", df);
-       printf("                          MF       %d\n", mf);
+       printf("%-*s: ", PRINT_LABEL_WIDTH, "Flags");
+       char reserved_string[] = "Reserved";
+       printf("%s %d\n", reserved_string, reserved);
+       printf("%*s %-*s%d\n", PRINT_LABEL_WIDTH + 1, "", (int)strlen(reserved_string) + 1, "DF", df);
+       printf("%*s %-*s%d\n", PRINT_LABEL_WIDTH + 1, "", (int)strlen(reserved_string) + 1, "MF", mf);
 
-       printf("Fragment Offset         : %u\n", fragment_offset * 8);
+       printf("%-*s: %u\n", PRINT_LABEL_WIDTH, "Fragment Offset", fragment_offset * 8);
+       printf("%-*s: 0x%02x\n", PRINT_LABEL_WIDTH, "TTL", ipv4.ttl);
+       printf("%-*s: 0x%02x\n", PRINT_LABEL_WIDTH, "Protocol", ipv4.protocol);
+       printf("%-*s: 0x%02x\n", PRINT_LABEL_WIDTH, "Header Checksum", ipv4.header_checksum);
 
-       printf("TTL                     : 0x%02x\n", ipv4.ttl);
-       printf("Protocol                : 0x%02x\n", ipv4.protocol);
-       printf("Header Checksum         : 0x%02x\n", ipv4.header_checksum);
-
-       printf("Source IP Address       : ");
+       printf("%-*s: ", PRINT_LABEL_WIDTH, "Source IP Address");
        print_ip(ipv4.source_ip);
        printf("\n");
 
-       printf("Destination IP Address  : ");
+       printf("%-*s: ", PRINT_LABEL_WIDTH, "Destination IP Address");
        print_ip(ipv4.destination_ip);
        printf("\n");
 
        if (ihl > 5)
        {
               int options_length = (ihl - 5) * 4;
-              if (options_length > 9)
-              {
-                     printf("Options (%d bytes)      : ", options_length);
-              }
-              else
-              {
-                     printf("Options (%d bytes)       : ", options_length);
-              }
+
+              char options_string[PRINT_LABEL_WIDTH];
+              snprintf(options_string,
+                       sizeof(options_string),
+                       "Options (%d bytes)",
+                       options_length);
+              printf("%-*s: ", PRINT_LABEL_WIDTH, options_string);
+
               for (int i = 0; i < options_length; i++)
               {
                      printf("%02X ", ipv4.options[i]);
@@ -57,53 +57,53 @@ void print_ipv4(IPv4 ipv4)
        }
        else
        {
-              printf("Options                 : None\n");
+              printf("%-*s: None\n", PRINT_LABEL_WIDTH, "Options");
        }
 }
 
 void print_ipv6(IPv6 ipv6)
 {
-       printf("Protocol                : IPv6\n");
+       printf("\n%-*s: IPv6\n", PRINT_LABEL_WIDTH, "Protocol");
 
        uint32_t version = ipv6.version_traffic_class_flow_label >> 28;
        uint32_t traffic_class = (ipv6.version_traffic_class_flow_label >> 20) & 0xFF;
        uint32_t flow_label = ipv6.version_traffic_class_flow_label & 0xFFFFF;
 
-       printf("Version                 : %u\n", version);
-       printf("Traffic Class           : 0x%02X\n", traffic_class);
-       printf("Flow Label              : 0x%05X\n", flow_label);
+       printf("%-*s: %u\n", PRINT_LABEL_WIDTH, "Version", version);
+       printf("%-*s: 0x%02x\n", PRINT_LABEL_WIDTH, "Traffic Class", traffic_class);
+       printf("%-*s: 0x%05x\n", PRINT_LABEL_WIDTH, "Flow Label", flow_label);
 
-       printf("Payload Length          : 0x%04x\n", ipv6.payload_length);
-       printf("Next Header             : 0x%02x\n", ipv6.next_header);
-       printf("Hop Limit               : 0x%02x\n", ipv6.hop_limit);
+       printf("%-*s: 0x%04x\n", PRINT_LABEL_WIDTH, "Payload Length", ipv6.payload_length);
+       printf("%-*s: 0x%02x\n", PRINT_LABEL_WIDTH, "Next Header", ipv6.next_header);
+       printf("%-*s: 0x%02x\n", PRINT_LABEL_WIDTH, "Hop Limit", ipv6.hop_limit);
 
-       printf("Source IP Address       : ");
+       printf("%-*s: ", PRINT_LABEL_WIDTH, "Source IP Address");
        print_address(ipv6.source_address);
        printf("\n");
 
-       printf("Destination IP Address  : ");
+       printf("%-*s: ", PRINT_LABEL_WIDTH, "Destination IP Address");
        print_address(ipv6.destination_address);
        printf("\n");
 }
 
 void print_icmp(Icmp icmp)
 {
-       printf("\nProtocol                : ICMP\n");
+       printf("\n%-*s: ICMP\n", PRINT_LABEL_WIDTH, "Protocol");
 
-       printf("Type                    : 0x%02X\n", icmp.type);
-       printf("Code                    : 0x%02X\n", icmp.code);
-       printf("Checksum                : 0x%04X\n", icmp.checksum);
-       printf("Rest Of Header          : 0x%08X\n", icmp.rest_of_header);
+       printf("%-*s: 0x%02x\n", PRINT_LABEL_WIDTH, "Type", icmp.type);
+       printf("%-*s: 0x%02x\n", PRINT_LABEL_WIDTH, "Code", icmp.code);
+       printf("%-*s: 0x%04x\n", PRINT_LABEL_WIDTH, "Checksum", icmp.checksum);
+       printf("%-*s: 0x%08x\n", PRINT_LABEL_WIDTH, "Rest Of Header", icmp.rest_of_header);
 }
 
 void print_icmpv6(Icmpv6 icmpv6)
 {
-       printf("\nProtocol                : ICMPv6\n");
+       printf("\n%-*s: ICMPv6\n", PRINT_LABEL_WIDTH, "Protocol");
 
-       printf("Type                    : 0x%02X\n", icmpv6.type);
-       printf("Code                    : 0x%02X\n", icmpv6.code);
-       printf("Checksum                : 0x%04X\n", icmpv6.checksum);
-       printf("Message Body            : 0x%08X\n", icmpv6.message_body);
+       printf("%-*s: 0x%02x\n", PRINT_LABEL_WIDTH, "Type", icmpv6.type);
+       printf("%-*s: 0x%02x\n", PRINT_LABEL_WIDTH, "Code", icmpv6.code);
+       printf("%-*s: 0x%04x\n", PRINT_LABEL_WIDTH, "Checksum", icmpv6.checksum);
+       printf("%-*s: 0x%08x\n", PRINT_LABEL_WIDTH, "Message Body", icmpv6.message_body);
 }
 
 void print_layer3(Packet packet)
