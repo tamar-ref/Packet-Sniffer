@@ -2,17 +2,17 @@
 
 void print_ethernet(Ethernet ethernet)
 {
-    printf("Protocol                : Ethernet II\n");
+    printf("\n%-*s: Ethernet II\n", PRINT_LABEL_WIDTH, "Protocol");
 
-    printf("Destination MAC         : ");
+    printf("%-*s: ", PRINT_LABEL_WIDTH, "Destination MAC");
     print_mac(ethernet.destination_mac);
     printf("\n");
 
-    printf("Source MAC              : ");
+    printf("%-*s: ", PRINT_LABEL_WIDTH, "Source MAC");
     print_mac(ethernet.source_mac);
     printf("\n");
 
-    printf("EtherType               : 0x%04X\n", ethernet.ether_type);
+    printf("%-*s: 0x%04X\n", PRINT_LABEL_WIDTH, "EtherType", ethernet.ether_type);
 }
 
 void print_vlan(Vlan vlan)
@@ -21,40 +21,40 @@ void print_vlan(Vlan vlan)
     uint16_t dei = (vlan.tci >> 12) & 0x01;
     uint16_t vid = vlan.tci & 0x0FFF;
 
-    printf("\nProtocol                : VLAN\n");
+    printf("\n%-*s: VLAN\n", PRINT_LABEL_WIDTH, "Protocol");
 
-    printf("TPID                    : 0x%04X\n", vlan.tpid);
+    printf("%-*s: 0x%04X\n", PRINT_LABEL_WIDTH, "TPID", vlan.tpid);
 
-    printf("Priority (PCP)          : %u\n", pcp);
-    printf("DEI                     : %u\n", dei);
-    printf("VLAN ID                 : %u\n", vid);
+    printf("%-*s: %u\n", PRINT_LABEL_WIDTH, "Priority (PCP)", pcp);
+    printf("%-*s: %u\n", PRINT_LABEL_WIDTH, "DEI", dei);
+    printf("%-*s: %u\n", PRINT_LABEL_WIDTH, "VLAN ID", vid);
 
-    printf("EtherType               : 0x%04X\n", vlan.ether_type);
+    printf("%-*s: 0x%04X\n", PRINT_LABEL_WIDTH, "EtherType", vlan.ether_type);
 }
 
 void print_arp(Arp arp)
 {
-    printf("\nProtocol                : ARP\n");
+    printf("\n%-*s: ARP\n", PRINT_LABEL_WIDTH, "Protocol");
 
-    printf("Hardware Type           : 0x%04X\n", arp.htype);
-    printf("Protocol Type           : 0x%04X\n", arp.ptype);
-    printf("Hardware Length         : 0x%02X\n", arp.hlen);
-    printf("Protocol Length         : 0x%02X\n", arp.plen);
-    printf("Opcode                  : 0x%04X\n", arp.opcode);
+    printf("%-*s: 0x%04X\n", PRINT_LABEL_WIDTH, "Hardware Type", arp.htype);
+    printf("%-*s: 0x%04X\n", PRINT_LABEL_WIDTH, "Protocol Type", arp.ptype);
+    printf("%-*s: 0x%02X\n", PRINT_LABEL_WIDTH, "Hardware Length", arp.hlen);
+    printf("%-*s: 0x%02X\n", PRINT_LABEL_WIDTH, "Protocol Length", arp.plen);
+    printf("%-*s: 0x%04X\n", PRINT_LABEL_WIDTH, "Opcode", arp.opcode);
 
-    printf("Sender Hardware Address : ");
+    printf("%-*s: ", PRINT_LABEL_WIDTH, "Sender Hardware Address");
     print_mac(arp.sha);
     printf("\n");
 
-    printf("Sender Protocol Address : ");
+    printf("%-*s: ", PRINT_LABEL_WIDTH, "Sender Protocol Address");
     print_ip(arp.spa);
     printf("\n");
 
-    printf("Sender Hardware Address : ");
+    printf("%-*s: ", PRINT_LABEL_WIDTH, "Target Hardware Address");
     print_mac(arp.tha);
     printf("\n");
 
-    printf("Target Protocol Address : ");
+    printf("%-*s: ", PRINT_LABEL_WIDTH, "Target Protocol Address");
     print_ip(arp.tpa);
     printf("\n");
 }

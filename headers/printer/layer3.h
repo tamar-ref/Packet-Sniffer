@@ -2,8 +2,10 @@
 #define LAYER_3_PRINTER_H
 
 #include <stdio.h>
+#include <string.h>
 
 #include "../common/utils.h"
+#include "../common/define.h"
 #include "../common/types/packet.h"
 #include "../common/types/layer3.h"
 
