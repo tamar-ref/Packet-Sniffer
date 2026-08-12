@@ -52,7 +52,7 @@ typedef struct
     uint8_t type;
     uint8_t code;
     uint16_t checksum;
-    uint32_t data;
+    uint32_t message_body;
 } Icmpv6;
 
 #pragma pack(pop)

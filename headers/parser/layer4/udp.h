@@ -6,6 +6,6 @@
 
 #include "../../common/types/packet.h"
 
-int parse_udp(Packet *packet, size_t *offset, uint16_t *next_protocol);
+int parse_udp(Packet *packet, size_t *offset);
 
 #endif

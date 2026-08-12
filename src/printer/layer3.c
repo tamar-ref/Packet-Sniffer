@@ -41,7 +41,14 @@ void print_ipv4(IPv4 ipv4)
        if (ihl > 5)
        {
               int options_length = (ihl - 5) * 4;
-              printf("Options (%d bytes)       : ", options_length);
+              if (options_length > 9)
+              {
+                     printf("Options (%d bytes)      : ", options_length);
+              }
+              else
+              {
+                     printf("Options (%d bytes)       : ", options_length);
+              }
               for (int i = 0; i < options_length; i++)
               {
                      printf("%02X ", ipv4.options[i]);
@@ -96,7 +103,7 @@ void print_icmpv6(Icmpv6 icmpv6)
        printf("Type                    : 0x%02X\n", icmpv6.type);
        printf("Code                    : 0x%02X\n", icmpv6.code);
        printf("Checksum                : 0x%04X\n", icmpv6.checksum);
-       printf("Data                    : 0x%08X\n", icmpv6.data);
+       printf("Message Body            : 0x%08X\n", icmpv6.message_body);
 }
 
 void print_layer3(Packet packet)

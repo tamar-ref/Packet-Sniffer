@@ -5,6 +5,7 @@
 #include "layer2.h"
 #include "layer3.h"
 #include "layer4.h"
+#include "layer5-7.h"
 
 typedef struct
 {
@@ -31,6 +32,9 @@ typedef struct
     Tcp tcp;
     int has_udp;
     Udp udp;
+
+    int has_http;
+    Http http;
 
 } Packet;
 
