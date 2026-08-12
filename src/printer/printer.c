@@ -14,6 +14,7 @@ void print_packet(Packet packet)
     if (!packet.has_icmp && !packet.has_icmpv6)
     {
         print_layer4(packet);
+        print_layer5_7(packet);
     }
 
     print_payload(packet.payload, packet.length);
