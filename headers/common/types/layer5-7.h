@@ -23,4 +23,12 @@ typedef struct
     int header_count;
 } Http;
 
+typedef struct
+{
+    uint8_t content_type;
+    uint16_t version;
+    uint16_t length;
+    uint8_t fragment[MAX_TLS_FRAGMENT_SIZE];
+} Tls;
+
 #endif

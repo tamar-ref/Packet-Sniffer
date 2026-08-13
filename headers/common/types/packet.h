@@ -35,6 +35,8 @@ typedef struct
 
     int has_http;
     Http http;
+    int has_tls;
+    Tls tls;
 
 } Packet;
 
