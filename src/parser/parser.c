@@ -105,6 +105,14 @@ int parse_layer5_7(Packet *packet, size_t *offset)
             return 0;
         }
     }
+    if (packet->has_tcp && (packet->tcp.destination_port == HTTPS_PORT || packet->tcp.source_port == HTTPS_PORT))
+    {
+        if (parse_https(packet, offset) == 0)
+        {
+            packet->has_tls = 1;
+            return 0;
+        }
+    }
     printf("Unknown Layer 5-7 Protocol\n");
     return -1;
 }
@@ -145,6 +153,7 @@ void parse_packet(Packet *packet, size_t *offset)
     }
 
     packet->has_http = 0;
+    packet->has_tls = 0;
     if (parse_layer5_7(packet, offset) != 0)
     {
         printf("Layer 5-7 Error\n");
