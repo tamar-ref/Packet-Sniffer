@@ -11,7 +11,7 @@ int parse_icmp(Packet *packet, size_t *offset)
 
     memcpy(&packet->icmp,
            packet->payload + *offset,
-           sizeof(packet->icmp));
+           sizeof(Icmp));
 
     packet->icmp.checksum = ntohs(packet->icmp.checksum);
     packet->icmp.rest_of_header = ntohl(packet->icmp.rest_of_header);

@@ -11,7 +11,7 @@ int parse_udp(Packet *packet, size_t *offset)
 
     memcpy(&packet->udp,
            packet->payload + *offset,
-           sizeof(packet->udp));
+           sizeof(Udp));
 
     packet->udp.source_port = ntohs(packet->udp.source_port);
     packet->udp.destination_port = ntohs(packet->udp.destination_port);

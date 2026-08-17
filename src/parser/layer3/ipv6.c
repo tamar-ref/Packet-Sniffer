@@ -11,7 +11,7 @@ int parse_ipv6(Packet *packet, size_t *offset, uint16_t *next_protocol)
 
     memcpy(&packet->ipv6,
            packet->payload + *offset,
-           sizeof(packet->ipv6));
+           sizeof(IPv6));
 
     packet->ipv6.version_traffic_class_flow_label = ntohl(packet->ipv6.version_traffic_class_flow_label);
     packet->ipv6.payload_length = ntohs(packet->ipv6.payload_length);

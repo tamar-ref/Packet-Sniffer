@@ -11,7 +11,7 @@ int parse_arp(Packet *packet, size_t *offset, uint16_t *next_protocol)
 
     memcpy(&packet->arp,
            packet->payload + *offset,
-           sizeof(packet->arp));
+           sizeof(Arp));
 
     packet->arp.htype = ntohs(packet->arp.htype);
     packet->arp.ptype = ntohs(packet->arp.ptype);

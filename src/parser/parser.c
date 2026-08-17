@@ -97,8 +97,6 @@ int parse_layer4(Packet *packet, size_t *offset, uint16_t *next_protocol)
 
 int parse_layer5_7(Packet *packet, size_t *offset)
 {
-    int known_protocol = 0;
-
     if (packet->has_tcp && (packet->tcp.destination_port == HTTP_PORT || packet->tcp.source_port == HTTP_PORT))
     {
         if (parse_http(packet, offset) != 0)
@@ -106,8 +104,8 @@ int parse_layer5_7(Packet *packet, size_t *offset)
             printf("HTTP Error\n");
             return -1;
         }
-        known_protocol = 1;
     }
+
     if (packet->has_tcp && (packet->tcp.destination_port == HTTPS_PORT || packet->tcp.source_port == HTTPS_PORT))
     {
         if (parse_https(packet, offset) != 0)
@@ -115,8 +113,8 @@ int parse_layer5_7(Packet *packet, size_t *offset)
             printf("HTTPS Error\n");
             return -1;
         }
-        known_protocol = 1;
     }
+
     if ((packet->has_tcp && (packet->tcp.destination_port == DNS_PORT || packet->tcp.source_port == DNS_PORT)) ||
         (packet->has_udp && (packet->udp.destination_port == DNS_PORT || packet->udp.source_port == DNS_PORT)))
     {
@@ -125,13 +123,19 @@ int parse_layer5_7(Packet *packet, size_t *offset)
             printf("DNS Error\n");
             return -1;
         }
-        known_protocol = 1;
     }
 
-    if (!known_protocol)
+    if ((packet->has_udp &&
+         (packet->udp.destination_port == SERVER_DHCP_PORT ||
+          packet->udp.destination_port == CLIENT_DHCP_PORT ||
+          packet->udp.source_port == SERVER_DHCP_PORT ||
+          packet->udp.source_port == CLIENT_DHCP_PORT)))
     {
-        printf("Unknown Layer 5-7 Protocol\n");
-        return -1;
+        if (parse_dhcp(packet, offset) != 0)
+        {
+            printf("DHCP Error\n");
+            return -1;
+        }
     }
 
     return 0;
@@ -180,6 +184,7 @@ void parse_packet(Packet *packet, size_t *offset)
     packet->has_http = 0;
     packet->has_tls = 0;
     packet->has_dns = 0;
+    packet->has_dhcp = 0;
     if (parse_layer5_7(packet, offset) != 0)
     {
         printf("Layer 5-7 Error\n");
