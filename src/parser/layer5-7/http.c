@@ -255,6 +255,8 @@ int parse_http(Packet *packet, size_t *offset)
         return -1;
     }
 
+    packet->has_http = 1;
+
     if (is_http_request(packet, offset))
     {
         packet->http.is_request = 1;

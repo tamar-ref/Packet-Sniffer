@@ -37,6 +37,11 @@
 #define MAX_TLS_FRAGMENT_SIZE 16384
 
 #define DNS_PORT 53
+#define DNS_FLAGS 16
+#define DNS_NAME_SIZE 256
+#define MAX_DNS_QUESTIONS 10
+#define MAX_DNS_RECORDS 50
+#define MAX_DNS_RDATA_SIZE 1024
 
 #define SERVER_DHCP_PORT 67
 #define CLIENT_DHCP_PORT 68
@@ -51,5 +56,6 @@
 #define TELNET_PORT 23
 
 #define PRINT_LABEL_WIDTH 24
+#define SUB_LABEL_WIDTH 4
 
 #endif

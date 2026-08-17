@@ -8,10 +8,12 @@ int parse_tcp(Packet *packet, size_t *offset)
        }
 
        packet->has_tcp = 1;
+       size_t basic_tcp_size = sizeof(Tcp) - sizeof(packet->tcp.options);
 
        memcpy(&packet->tcp,
               packet->payload + *offset,
-              sizeof(packet->tcp) - sizeof(packet->tcp.options));
+              basic_tcp_size);
+
        packet->tcp.source_port = ntohs(packet->tcp.source_port);
        packet->tcp.destination_port = ntohs(packet->tcp.destination_port);
        packet->tcp.sequence_number = ntohl(packet->tcp.sequence_number);
@@ -21,7 +23,7 @@ int parse_tcp(Packet *packet, size_t *offset)
        packet->tcp.checksum = ntohs(packet->tcp.checksum);
        packet->tcp.urgent_pointer = ntohs(packet->tcp.urgent_pointer);
 
-       *offset += sizeof(packet->tcp) - sizeof(packet->tcp.options);
+       *offset += basic_tcp_size;
 
        uint16_t data_offset = (packet->tcp.data_offset_reserved_flags >> 12) & 0x0F;
        if (data_offset > 5)

@@ -27,15 +27,18 @@ int parse_https(Packet *packet, size_t *offset)
         return -1;
     }
 
+    packet->has_tls = 1;
+    size_t basic_tls_size = sizeof(Tls) - sizeof(packet->tls.fragment);
+
     memcpy(
         &packet->tls,
         packet->payload + *offset,
-        sizeof(Tls) - sizeof(packet->tls.fragment));
+        basic_tls_size);
 
     packet->tls.version = ntohs(packet->tls.version);
     packet->tls.length = ntohs(packet->tls.length);
 
-    *offset += sizeof(Tls) - sizeof(packet->tls.fragment);
+    *offset += basic_tls_size;
 
     if (packet->tls.length > 0)
     {

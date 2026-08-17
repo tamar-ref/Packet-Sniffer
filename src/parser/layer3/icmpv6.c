@@ -16,7 +16,7 @@ int parse_icmpv6(Packet *packet, size_t *offset)
     packet->icmpv6.checksum = ntohs(packet->icmpv6.checksum);
     packet->icmpv6.message_body = ntohl(packet->icmpv6.message_body);
 
-    *offset += sizeof(packet->icmpv6);
+    *offset += sizeof(Icmpv6);
 
     return 0;
 }

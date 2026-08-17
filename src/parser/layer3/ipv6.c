@@ -16,7 +16,7 @@ int parse_ipv6(Packet *packet, size_t *offset, uint16_t *next_protocol)
     packet->ipv6.version_traffic_class_flow_label = ntohl(packet->ipv6.version_traffic_class_flow_label);
     packet->ipv6.payload_length = ntohs(packet->ipv6.payload_length);
 
-    *offset += sizeof(packet->ipv6);
+    *offset += sizeof(IPv6);
     *next_protocol = packet->ipv6.next_header;
 
     return 0;
