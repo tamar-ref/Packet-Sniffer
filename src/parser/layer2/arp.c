@@ -17,8 +17,7 @@ int parse_arp(Packet *packet, size_t *offset, uint16_t *next_protocol)
     packet->arp.ptype = ntohs(packet->arp.ptype);
     packet->arp.opcode = ntohs(packet->arp.opcode);
 
-    *offset += sizeof(packet->arp);
-    *next_protocol = IPV4_ETHERTYPE;
+    *offset += sizeof(Arp);
 
     return 0;
 }

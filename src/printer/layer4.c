@@ -29,17 +29,15 @@ void print_tcp(Tcp tcp)
     uint8_t syn = (flags >> 1) & 1;
     uint8_t fin = flags & 1;
 
-    printf("%-*s: ", PRINT_LABEL_WIDTH, "Flags");
-    int max_flag_length = (int)strlen("CWR") + 1;
-    printf("%-*s %d\n", max_flag_length - 1, "NS", ns);
-    printf("%*s %-*s%d\n", PRINT_LABEL_WIDTH + 1, "", max_flag_length, "CWR", cwr);
-    printf("%*s %-*s%d\n", PRINT_LABEL_WIDTH + 1, "", max_flag_length, "ECE", ece);
-    printf("%*s %-*s%d\n", PRINT_LABEL_WIDTH + 1, "", max_flag_length, "URG", urg);
-    printf("%*s %-*s%d\n", PRINT_LABEL_WIDTH + 1, "", max_flag_length, "ACK", ack);
-    printf("%*s %-*s%d\n", PRINT_LABEL_WIDTH + 1, "", max_flag_length, "PSH", psh);
-    printf("%*s %-*s%d\n", PRINT_LABEL_WIDTH + 1, "", max_flag_length, "RST", rst);
-    printf("%*s %-*s%d\n", PRINT_LABEL_WIDTH + 1, "", max_flag_length, "SYN", syn);
-    printf("%*s %-*s%d\n", PRINT_LABEL_WIDTH + 1, "", max_flag_length, "FIN", fin);
+    printf("Flags\n");
+    printf("%-*s%-*s: %d\n", SUB_LABEL_WIDTH, "", PRINT_LABEL_WIDTH - SUB_LABEL_WIDTH, "CWR", cwr);
+    printf("%-*s%-*s: %d\n", SUB_LABEL_WIDTH, "", PRINT_LABEL_WIDTH - SUB_LABEL_WIDTH, "ECE", ece);
+    printf("%-*s%-*s: %d\n", SUB_LABEL_WIDTH, "", PRINT_LABEL_WIDTH - SUB_LABEL_WIDTH, "URG", urg);
+    printf("%-*s%-*s: %d\n", SUB_LABEL_WIDTH, "", PRINT_LABEL_WIDTH - SUB_LABEL_WIDTH, "ACK", ack);
+    printf("%-*s%-*s: %d\n", SUB_LABEL_WIDTH, "", PRINT_LABEL_WIDTH - SUB_LABEL_WIDTH, "PSH", psh);
+    printf("%-*s%-*s: %d\n", SUB_LABEL_WIDTH, "", PRINT_LABEL_WIDTH - SUB_LABEL_WIDTH, "RST", rst);
+    printf("%-*s%-*s: %d\n", SUB_LABEL_WIDTH, "", PRINT_LABEL_WIDTH - SUB_LABEL_WIDTH, "SYN", syn);
+    printf("%-*s%-*s: %d\n", SUB_LABEL_WIDTH, "", PRINT_LABEL_WIDTH - SUB_LABEL_WIDTH, "FIN", fin);
 
     printf("%-*s: 0x%04x\n", PRINT_LABEL_WIDTH, "Window Size", tcp.window_size);
     printf("%-*s: 0x%04x\n", PRINT_LABEL_WIDTH, "Checksum", tcp.checksum);

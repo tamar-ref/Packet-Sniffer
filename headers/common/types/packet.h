@@ -37,6 +37,8 @@ typedef struct
     Http http;
     int has_tls;
     Tls tls;
+    int has_dns;
+    Dns dns;
 
 } Packet;
 

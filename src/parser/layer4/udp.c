@@ -18,7 +18,7 @@ int parse_udp(Packet *packet, size_t *offset)
     packet->udp.length = ntohs(packet->udp.length);
     packet->udp.checksum = ntohs(packet->udp.checksum);
 
-    *offset += sizeof(packet->udp);
+    *offset += sizeof(Udp);
 
     return 0;
 }

@@ -19,11 +19,10 @@ void print_ipv4(IPv4 ipv4)
        uint8_t df = (flags >> 1) & 1;
        uint8_t mf = flags & 1;
 
-       printf("%-*s: ", PRINT_LABEL_WIDTH, "Flags");
-       char reserved_string[] = "Reserved";
-       printf("%s %d\n", reserved_string, reserved);
-       printf("%*s %-*s%d\n", PRINT_LABEL_WIDTH + 1, "", (int)strlen(reserved_string) + 1, "DF", df);
-       printf("%*s %-*s%d\n", PRINT_LABEL_WIDTH + 1, "", (int)strlen(reserved_string) + 1, "MF", mf);
+       printf("Flags\n");
+       printf("%-*s%-*s: %d\n", SUB_LABEL_WIDTH, "", PRINT_LABEL_WIDTH - SUB_LABEL_WIDTH, "Reserved", reserved);
+       printf("%-*s%-*s: %d\n", SUB_LABEL_WIDTH, "", PRINT_LABEL_WIDTH - SUB_LABEL_WIDTH, "DF", df);
+       printf("%-*s%-*s: %d\n", SUB_LABEL_WIDTH, "", PRINT_LABEL_WIDTH - SUB_LABEL_WIDTH, "MF", mf);
 
        printf("%-*s: %u\n", PRINT_LABEL_WIDTH, "Fragment Offset", fragment_offset * 8);
        printf("%-*s: 0x%02x\n", PRINT_LABEL_WIDTH, "TTL", ipv4.ttl);

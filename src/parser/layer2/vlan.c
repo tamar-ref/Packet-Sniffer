@@ -18,7 +18,7 @@ int parse_vlan(Packet *packet, size_t *offset, uint16_t *next_protocol)
     packet->vlan.tci = ntohs(packet->vlan.tci);
     packet->vlan.ether_type = ntohs(packet->vlan.ether_type);
     
-    *offset += sizeof(packet->vlan);
+    *offset += sizeof(Vlan);
     *next_protocol = packet->vlan.ether_type;
 
     return 0;

@@ -16,7 +16,7 @@ int parse_icmp(Packet *packet, size_t *offset)
     packet->icmp.checksum = ntohs(packet->icmp.checksum);
     packet->icmp.rest_of_header = ntohl(packet->icmp.rest_of_header);
 
-    *offset += sizeof(packet->icmp);
+    *offset += sizeof(Icmp);
 
     return 0;
 }
