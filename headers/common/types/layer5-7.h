@@ -64,6 +64,35 @@ typedef struct
     DnsRecord additionals[MAX_DNS_RECORDS];
 } Dns;
 
+typedef struct
+{
+    uint8_t code;
+    uint8_t length;
+    uint8_t data[DHCP_OPTION_DATA_SIZE];
+
+} DhcpOption;
+
+typedef struct
+{
+    uint8_t op;
+    uint8_t htype;
+    uint8_t hlen;
+    uint8_t hops;
+    uint32_t xid;
+    uint16_t secs;
+    uint16_t flags;
+    uint8_t ciaddr[IP_ADDRESS_SIZE];
+    uint8_t yiaddr[IP_ADDRESS_SIZE];
+    uint8_t siaddr[IP_ADDRESS_SIZE];
+    uint8_t giaddr[IP_ADDRESS_SIZE];
+    uint8_t chaddr[16];
+    char sname[64];
+    char file[128];
+    uint32_t magic_cookie;
+    DhcpOption options[MAX_DHCP_OPTIONS];
+    int option_count;
+} Dhcp;
+
 #pragma pack(pop)
 
 #endif

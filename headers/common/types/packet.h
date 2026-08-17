@@ -39,6 +39,8 @@ typedef struct
     Tls tls;
     int has_dns;
     Dns dns;
+    int has_dhcp;
+    Dhcp dhcp;
 
 } Packet;
 

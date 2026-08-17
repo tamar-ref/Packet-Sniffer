@@ -12,7 +12,7 @@ int parse_vlan(Packet *packet, size_t *offset, uint16_t *next_protocol)
 
     memcpy(&packet->vlan,
            packet->payload + *offset,
-           sizeof(packet->vlan));
+           sizeof(Vlan));
 
     packet->vlan.tpid = ntohs(packet->vlan.tpid);
     packet->vlan.tci = ntohs(packet->vlan.tci);
