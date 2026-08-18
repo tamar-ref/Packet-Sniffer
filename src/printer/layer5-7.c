@@ -184,6 +184,30 @@ void print_dhcp(Dhcp dhcp)
     }
 }
 
+void print_ftp(Ftp ftp)
+{
+    printf("\n%-*s: FTP\n", PRINT_LABEL_WIDTH, "Protocol");
+
+    if (ftp.is_request)
+    {
+        printf("%-*s: %s\n", PRINT_LABEL_WIDTH, "Command", ftp.command);
+
+        if (ftp.argument[0] != '\0')
+        {
+            printf("%-*s: %s\n", PRINT_LABEL_WIDTH, "Argument", ftp.argument);
+        }
+        else
+        {
+            printf("%-*s: None\n", PRINT_LABEL_WIDTH, "Argument");
+        }
+    }
+    else if (ftp.is_response)
+    {
+        printf("%-*s: %d\n", PRINT_LABEL_WIDTH, "Status Code", ftp.status_code);
+        printf("%-*s: %s\n", PRINT_LABEL_WIDTH, "Status Text", ftp.status_text);
+    }
+}
+
 void print_layer5_7(Packet packet)
 {
     int known_protocol = 0;
@@ -193,23 +217,28 @@ void print_layer5_7(Packet packet)
 
     if (packet.has_http)
     {
-        int known_protocol = 1;
+        known_protocol = 1;
         print_http(packet.http);
     }
     if (packet.has_tls)
     {
-        int known_protocol = 1;
+        known_protocol = 1;
         print_https(packet.tls);
     }
     if (packet.has_dns)
     {
-        int known_protocol = 1;
+        known_protocol = 1;
         print_dns(packet.dns);
     }
     if (packet.has_dhcp)
     {
-        int known_protocol = 1;
+        known_protocol = 1;
         print_dhcp(packet.dhcp);
+    }
+    if (packet.has_ftp)
+    {
+        known_protocol = 1;
+        print_ftp(packet.ftp);
     }
 
     if (!known_protocol)
