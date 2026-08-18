@@ -151,6 +151,15 @@ int parse_layer5_7(Packet *packet, size_t *offset)
         }
     }
 
+    if ((packet->has_tcp && (packet->tcp.destination_port == SSH_PORT || packet->tcp.source_port == SSH_PORT)))
+    {
+        if (parse_ssh(packet, offset) != 0)
+        {
+            printf("SSH Error\n");
+            return -1;
+        }
+    }
+
     return 0;
 }
 
@@ -199,6 +208,7 @@ void parse_packet(Packet *packet, size_t *offset)
     packet->has_dns = 0;
     packet->has_dhcp = 0;
     packet->has_ftp = 0;
+    packet->has_ssh = 0;
     if (parse_layer5_7(packet, offset) != 0)
     {
         printf("Layer 5-7 Error\n");

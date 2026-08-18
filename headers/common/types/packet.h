@@ -43,6 +43,8 @@ typedef struct
     Dhcp dhcp;
     int has_ftp;
     Ftp ftp;
+    int has_ssh;
+    Ssh ssh;
 
 } Packet;
 
