@@ -103,6 +103,18 @@ typedef struct
     char status_text[FTP_STATUS_TEXT_SIZE];
 } Ftp;
 
+typedef struct
+{
+    char identification[SSH_IDENTIFICATION_SIZE];
+    uint32_t packet_length;
+    uint8_t padding_length;
+    uint8_t message_type;
+    uint8_t payload[MAX_SSH_PAYLOAD_SIZE];
+    uint32_t payload_length;
+    uint8_t padding[MAX_SSH_PAYLOAD_SIZE];
+    int is_identification;
+} Ssh;
+
 #pragma pack(pop)
 
 #endif
