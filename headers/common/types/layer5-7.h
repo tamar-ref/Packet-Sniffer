@@ -93,6 +93,16 @@ typedef struct
     int option_count;
 } Dhcp;
 
+typedef struct
+{
+    int is_request;
+    int is_response;
+    char command[FTP_COMMAND_SIZE];
+    char argument[FTP_ARGUMENT_SIZE];
+    int status_code;
+    char status_text[FTP_STATUS_TEXT_SIZE];
+} Ftp;
+
 #pragma pack(pop)
 
 #endif

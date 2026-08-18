@@ -255,28 +255,20 @@ int parse_http(Packet *packet, size_t *offset)
         return -1;
     }
 
-    packet->has_http = 1;
-
     if (is_http_request(packet, offset))
     {
+        packet->has_http = 1;
         packet->http.is_request = 1;
         packet->http.is_response = 0;
-        if (parse_http_request(packet, offset) != 0)
-        {
-            return -1;
-        }
-        return 0;
+        return parse_http_request(packet, offset);
     }
 
     if (is_http_response(packet, offset))
     {
+        packet->has_http = 1;
         packet->http.is_request = 0;
         packet->http.is_response = 1;
-        if (parse_http_response(packet, offset) != 0)
-        {
-            return -1;
-        }
-        return 0;
+        return parse_http_response(packet, offset);
     }
 
     return -1;

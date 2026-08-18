@@ -41,6 +41,8 @@ typedef struct
     Dns dns;
     int has_dhcp;
     Dhcp dhcp;
+    int has_ftp;
+    Ftp ftp;
 
 } Packet;
 
