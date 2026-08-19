@@ -1,5 +1,5 @@
-#ifndef UDP_H
-#define UDP_H
+#ifndef UDP_PARSER_H
+#define UDP_PARSER_H
 
 #include <string.h>
 #include <arpa/inet.h>

@@ -1,5 +1,5 @@
-#ifndef SSH_H
-#define SSH_H
+#ifndef SSH_PARSER_H
+#define SSH_PARSER_H
 
 #include <arpa/inet.h>
 #include <string.h>

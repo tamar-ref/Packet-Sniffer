@@ -1,5 +1,5 @@
-#ifndef DHCP_H
-#define DHCP_H
+#ifndef DHCP_PARSER_H
+#define DHCP_PARSER_H
 
 #include <arpa/inet.h>
 #include <string.h>

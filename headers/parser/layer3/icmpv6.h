@@ -1,5 +1,5 @@
-#ifndef ICMPV6_H
-#define ICMPV6_H
+#ifndef ICMPV6_PARSER_H
+#define ICMPV6_PARSER_H
 
 #include <string.h>
 #include <arpa/inet.h>

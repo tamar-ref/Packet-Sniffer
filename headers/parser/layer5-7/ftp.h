@@ -1,5 +1,5 @@
-#ifndef FTP_H
-#define FTP_H
+#ifndef FTP_PARSER_H
+#define FTP_PARSER_H
 
 #include <arpa/inet.h>
 #include <string.h>
