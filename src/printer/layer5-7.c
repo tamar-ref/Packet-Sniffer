@@ -222,14 +222,14 @@ void print_ssh(Ssh ssh)
         printf("%-*s: %u bytes\n", PRINT_LABEL_WIDTH, "Padding Length", ssh.padding_length);
         printf("%-*s: %u\n", PRINT_LABEL_WIDTH, "Message Type", ssh.message_type);
         printf("%-*s: %u bytes\n", PRINT_LABEL_WIDTH, "Payload Length", ssh.payload_length);
-        
+
         printf("%-*s: ", PRINT_LABEL_WIDTH, "Payload");
         for (int i = 0; i < ssh.payload_length; i++)
         {
             printf("%02X ", ssh.payload[i]);
         }
         printf("\n");
-        
+
         printf("%-*s: ", PRINT_LABEL_WIDTH, "Padding");
         for (int i = 0; i < ssh.padding_length; i++)
         {
@@ -237,6 +237,50 @@ void print_ssh(Ssh ssh)
         }
         printf("\n");
     }
+}
+
+double ntp_fixed_to_seconds(uint32_t value)
+{
+    return (double)value / 65536.0;
+}
+
+void print_ntp(Ntp ntp)
+{
+    printf("\n%-*s: NTP\n", PRINT_LABEL_WIDTH, "Protocol");
+
+    uint8_t li = (ntp.li_version_mode >> 6) & 0x03;
+    uint8_t version = (ntp.li_version_mode >> 3) & 0x07;
+    uint8_t mode = ntp.li_version_mode & 0x07;
+
+    printf("%-*s: %u\n", PRINT_LABEL_WIDTH, "Leap Indicator", li);
+    printf("%-*s: %u\n", PRINT_LABEL_WIDTH, "Version", version);
+    printf("%-*s: %u\n", PRINT_LABEL_WIDTH, "Mode", mode);
+    printf("%-*s: %u\n", PRINT_LABEL_WIDTH, "Stratum", ntp.stratum);
+    printf("%-*s: %u\n", PRINT_LABEL_WIDTH, "Poll", ntp.poll);
+    printf("%-*s: 0x%02x\n", PRINT_LABEL_WIDTH, "Precision", ntp.precision);
+
+    printf("%-*s: %.6f seconds\n", PRINT_LABEL_WIDTH, "Root Delay", ntp_fixed_to_seconds(ntp.root_delay));
+    printf("%-*s: %.6f seconds\n", PRINT_LABEL_WIDTH, "Root Dispersion", ntp_fixed_to_seconds(ntp.root_dispersion));
+
+    printf("%-*s: ", PRINT_LABEL_WIDTH, "Reference ID");
+    print_ip(ntp.reference_id);
+    printf("\n");
+
+    printf("%-*s: ", PRINT_LABEL_WIDTH, "Reference Timestamp");
+    print_timestamp(ntp.reference_timestamp);
+    printf("\n");
+
+    printf("%-*s: ", PRINT_LABEL_WIDTH, "Origin Timestamp");
+    print_timestamp(ntp.originate_timestamp);
+    printf("\n");
+
+    printf("%-*s: ", PRINT_LABEL_WIDTH, "Receive Timestamp");
+    print_timestamp(ntp.receive_timestamp);
+    printf("\n");
+
+    printf("%-*s: ", PRINT_LABEL_WIDTH, "Transmit Timestamp");
+    print_timestamp(ntp.transmit_timestamp);
+    printf("\n");
 }
 
 void print_layer5_7(Packet packet)
@@ -275,6 +319,11 @@ void print_layer5_7(Packet packet)
     {
         known_protocol = 1;
         print_ssh(packet.ssh);
+    }
+    if (packet.has_ntp)
+    {
+        known_protocol = 1;
+        print_ntp(packet.ntp);
     }
 
     if (!known_protocol)

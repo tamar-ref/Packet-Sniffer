@@ -47,3 +47,38 @@ void print_bits(uint16_t value, int bits)
         printf("%u", (value >> i) & 1);
     }
 }
+
+const char *month_name(int month)
+{
+    const char *months[] =
+        {
+            "Jan", "Feb", "Mar", "Apr",
+            "May", "Jun", "Jul", "Aug",
+            "Sep", "Oct", "Nov", "Dec"};
+
+    return months[month];
+}
+
+void print_timestamp(uint64_t timestamp)
+{
+    uint32_t seconds = timestamp >> 32;
+    uint32_t fraction = timestamp & 0xFFFFFFFF;
+    double fractional_seconds = (double)fraction / 4294967296.0;
+    time_t unix_time = (time_t)(seconds - 2208988800UL);
+    struct tm *utc = gmtime(&unix_time);
+
+    if (utc == NULL)
+    {
+        printf("Invalid timestamp");
+        return;
+    }
+
+    printf("%s %02d, %04d %02d:%02d:%02d.%09u UTC",
+           month_name(utc->tm_mon),
+           utc->tm_mday,
+           utc->tm_year + 1900,
+           utc->tm_hour,
+           utc->tm_min,
+           utc->tm_sec,
+           (unsigned int)(fractional_seconds * 1000000000.0));
+}

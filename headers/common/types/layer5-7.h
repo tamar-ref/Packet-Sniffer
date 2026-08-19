@@ -115,6 +115,24 @@ typedef struct
     int is_identification;
 } Ssh;
 
+typedef struct
+{
+    uint8_t li_version_mode;
+    // li : 2
+    // version : 3
+    // mode : 3
+    uint8_t stratum;
+    uint8_t poll;
+    uint8_t precision;
+    uint32_t root_delay;
+    uint32_t root_dispersion;
+    uint8_t reference_id[4];
+    uint64_t reference_timestamp;
+    uint64_t originate_timestamp;
+    uint64_t receive_timestamp;
+    uint64_t transmit_timestamp;
+} Ntp;
+
 #pragma pack(pop)
 
 #endif

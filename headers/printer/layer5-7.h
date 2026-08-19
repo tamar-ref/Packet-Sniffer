@@ -14,6 +14,10 @@ void print_dns_record(DnsRecord record, const char *record_type, int index);
 void print_dns(Dns dns);
 void print_dhcp_option(DhcpOption option, int index);
 void print_dhcp(Dhcp dhcp);
+void print_ftp(Ftp ftp);
+void print_ssh(Ssh ssh);
+double ntp_fixed_to_seconds(uint32_t value);
+void print_ntp(Ntp ntp);
 void print_layer5_7(Packet packet);
 
 #endif

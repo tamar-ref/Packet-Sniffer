@@ -125,11 +125,11 @@ int parse_layer5_7(Packet *packet, size_t *offset)
         }
     }
 
-    if ((packet->has_udp &&
-         (packet->udp.destination_port == SERVER_DHCP_PORT ||
-          packet->udp.destination_port == CLIENT_DHCP_PORT ||
-          packet->udp.source_port == SERVER_DHCP_PORT ||
-          packet->udp.source_port == CLIENT_DHCP_PORT)))
+    if (packet->has_udp &&
+        (packet->udp.destination_port == SERVER_DHCP_PORT ||
+         packet->udp.destination_port == CLIENT_DHCP_PORT ||
+         packet->udp.source_port == SERVER_DHCP_PORT ||
+         packet->udp.source_port == CLIENT_DHCP_PORT))
     {
         if (parse_dhcp(packet, offset) != 0)
         {
@@ -138,11 +138,11 @@ int parse_layer5_7(Packet *packet, size_t *offset)
         }
     }
 
-    if ((packet->has_tcp &&
-         (packet->tcp.destination_port == CONTROL_FTP_PORT ||
-          packet->tcp.destination_port == ACTIVE_FTP_PORT ||
-          packet->tcp.source_port == CONTROL_FTP_PORT ||
-          packet->tcp.source_port == ACTIVE_FTP_PORT)))
+    if (packet->has_tcp &&
+        (packet->tcp.destination_port == CONTROL_FTP_PORT ||
+         packet->tcp.destination_port == ACTIVE_FTP_PORT ||
+         packet->tcp.source_port == CONTROL_FTP_PORT ||
+         packet->tcp.source_port == ACTIVE_FTP_PORT))
     {
         if (parse_ftp(packet, offset) != 0)
         {
@@ -151,11 +151,20 @@ int parse_layer5_7(Packet *packet, size_t *offset)
         }
     }
 
-    if ((packet->has_tcp && (packet->tcp.destination_port == SSH_PORT || packet->tcp.source_port == SSH_PORT)))
+    if (packet->has_tcp && (packet->tcp.destination_port == SSH_PORT || packet->tcp.source_port == SSH_PORT))
     {
         if (parse_ssh(packet, offset) != 0)
         {
             printf("SSH Error\n");
+            return -1;
+        }
+    }
+
+    if (packet->has_udp && (packet->udp.destination_port == NTP_PORT || packet->udp.source_port == NTP_PORT))
+    {
+        if (parse_ntp(packet, offset) != 0)
+        {
+            printf("NTP Error\n");
             return -1;
         }
     }
@@ -209,6 +218,7 @@ void parse_packet(Packet *packet, size_t *offset)
     packet->has_dhcp = 0;
     packet->has_ftp = 0;
     packet->has_ssh = 0;
+    packet->has_ntp = 0;
     if (parse_layer5_7(packet, offset) != 0)
     {
         printf("Layer 5-7 Error\n");
