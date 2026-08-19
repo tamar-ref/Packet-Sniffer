@@ -45,6 +45,8 @@ typedef struct
     Ftp ftp;
     int has_ssh;
     Ssh ssh;
+    int has_ntp;
+    Ntp ntp;
 
 } Packet;
 

@@ -11,9 +11,9 @@ typedef struct
 {
     uint16_t tpid;
     uint16_t tci;
-    // pcp : 3;
-    // dei : 1;
-    // vid : 12;
+    // pcp : 3
+    // dei : 1
+    // vid : 12
     uint16_t ether_type;
 } Vlan;
 
