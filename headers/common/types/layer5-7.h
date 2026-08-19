@@ -1,6 +1,8 @@
 #ifndef LAYER5_7_TYPE_H
 #define LAYER5_7_TYPE_H
 
+#include <stdint.h>
+
 #include "../define.h"
 
 typedef struct
@@ -132,6 +134,11 @@ typedef struct
     uint64_t receive_timestamp;
     uint64_t transmit_timestamp;
 } Ntp;
+
+typedef struct
+{
+
+} Telnet;
 
 #pragma pack(pop)
 

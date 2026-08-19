@@ -1,5 +1,5 @@
-#ifndef TELNET_H
-#define TELNET_H
+#ifndef TELNET_PARSER_H
+#define TELNET_PARSER_H
 
 #include <arpa/inet.h>
 

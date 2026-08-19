@@ -1,5 +1,5 @@
-#ifndef ARP_H
-#define ARP_H
+#ifndef ARP_PARSER_H
+#define ARP_PARSER_H
 
 #include <string.h>
 #include <arpa/inet.h>

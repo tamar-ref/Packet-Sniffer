@@ -1,5 +1,5 @@
-#ifndef VLAN_H
-#define VLAN_H
+#ifndef VLAN_PARSER_H
+#define VLAN_PARSER_H
 
 #include <string.h>
 #include <stdio.h>

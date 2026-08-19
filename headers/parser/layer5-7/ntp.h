@@ -1,5 +1,5 @@
-#ifndef NTP_H
-#define NTP_H
+#ifndef NTP_PARSER_H
+#define NTP_PARSER_H
 
 #include <arpa/inet.h>
 #include <endian.h>

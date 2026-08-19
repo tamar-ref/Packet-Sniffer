@@ -1,5 +1,5 @@
-#ifndef DNS_H
-#define DNS_H
+#ifndef DNS_PARSER_H
+#define DNS_PARSER_H
 
 #include <arpa/inet.h>
 #include <string.h>

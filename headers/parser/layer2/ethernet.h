@@ -1,5 +1,5 @@
-#ifndef ETHERNET_H
-#define ETHERNET_H
+#ifndef ETHERNET_PARSER_H
+#define ETHERNET_PARSER_H
 
 #include <string.h>
 #include <arpa/inet.h>

@@ -1,5 +1,5 @@
-#ifndef HTTP_H
-#define HTTP_H
+#ifndef HTTP_PARSER_H
+#define HTTP_PARSER_H
 
 #include <string.h>
 #include <arpa/inet.h>

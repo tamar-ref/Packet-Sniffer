@@ -1,5 +1,5 @@
-#ifndef HTTPS_H
-#define HTTPS_H
+#ifndef HTTPS_PARSER_H
+#define HTTPS_PARSER_H
 
 #include <arpa/inet.h>
 #include <string.h>

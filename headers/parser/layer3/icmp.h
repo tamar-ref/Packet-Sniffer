@@ -1,5 +1,5 @@
-#ifndef ICMP_H
-#define ICMP_H
+#ifndef ICMP_PARSER_H
+#define ICMP_PARSER_H
 
 #include <string.h>
 #include <arpa/inet.h>

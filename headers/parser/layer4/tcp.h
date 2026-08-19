@@ -1,5 +1,5 @@
-#ifndef TCP_H
-#define TCP_H
+#ifndef TCP_PARSER_H
+#define TCP_PARSER_H
 
 #include <string.h>
 #include <arpa/inet.h>
