@@ -2,14 +2,8 @@
 
 void print_https(Tls tls)
 {
-    printf("\n%-*s: HTTPS\n",
-           PRINT_LABEL_WIDTH,
-           "Protocol");
-
-    printf("%-*s: 0x%02X",
-           PRINT_LABEL_WIDTH,
-           "Content Type",
-           tls.content_type);
+    print_protocol_name("HTTPS");
+    print_hex_field("Content Type", tls.content_type, 2);
 
     switch (tls.content_type)
     {
@@ -34,15 +28,8 @@ void print_https(Tls tls)
         break;
     }
 
-    printf("%-*s: 0x%04X\n",
-           PRINT_LABEL_WIDTH,
-           "Version",
-           tls.version);
-
-    printf("%-*s: %u bytes\n",
-           PRINT_LABEL_WIDTH,
-           "Length",
-           tls.length);
+    print_hex_field("Version", tls.version, 4);
+    print_uint_bytes_field("Length", tls.length);
 
     printf("%-*s: ",
            PRINT_LABEL_WIDTH,
@@ -50,8 +37,7 @@ void print_https(Tls tls)
 
     for (int i = 0; i < tls.length; i++)
     {
-        printf("%02X ",
-               tls.fragment[i]);
+        printf("%02X ", tls.fragment[i]);
     }
     printf("\n");
 }

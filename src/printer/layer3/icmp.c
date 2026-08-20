@@ -2,27 +2,9 @@
 
 void print_icmp(Icmp icmp)
 {
-    printf("\n%-*s: ICMP\n",
-           PRINT_LABEL_WIDTH,
-           "Protocol");
-
-    printf("%-*s: 0x%02x\n",
-           PRINT_LABEL_WIDTH,
-           "Type",
-           icmp.type);
-
-    printf("%-*s: 0x%02x\n",
-           PRINT_LABEL_WIDTH,
-           "Code",
-           icmp.code);
-
-    printf("%-*s: 0x%04x\n",
-           PRINT_LABEL_WIDTH,
-           "Checksum",
-           icmp.checksum);
-
-    printf("%-*s: 0x%08x\n",
-           PRINT_LABEL_WIDTH,
-           "Rest Of Header",
-           icmp.rest_of_header);
+       print_protocol_name("ICMP");
+       print_hex_field("Type", icmp.type, 2);
+       print_hex_field("Code", icmp.code, 2);
+       print_hex_field("Checksum", icmp.checksum, 4);
+       print_hex_field("Rest Of Header", icmp.rest_of_header, 8);
 }

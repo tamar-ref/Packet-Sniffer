@@ -5,7 +5,7 @@
 
 #include "../../common/types/layer5-7.h"
 #include "../../common/define.h"
-#include "../../common/utils.h"
+#include "../../common/printer_utils.h"
 
 void print_dhcp_option(DhcpOption option, int index);
 void print_dhcp(Dhcp dhcp);

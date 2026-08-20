@@ -2,27 +2,9 @@
 
 void print_udp(Udp udp)
 {
-    printf("\n%-*s: UDP\n",
-           PRINT_LABEL_WIDTH,
-           "Protocol");
-
-    printf("%-*s: %u\n",
-           PRINT_LABEL_WIDTH,
-           "Source Port",
-           udp.source_port);
-
-    printf("%-*s: %u\n",
-           PRINT_LABEL_WIDTH,
-           "Destination Port",
-           udp.destination_port);
-
-    printf("%-*s: %u\n",
-           PRINT_LABEL_WIDTH,
-           "Length",
-           udp.length);
-
-    printf("%-*s: 0x%04x\n",
-           PRINT_LABEL_WIDTH,
-           "Checksum",
-           udp.checksum);
+       print_protocol_name("UDP");
+       print_uint_field("Source Port", udp.source_port);
+       print_uint_field("Destination Port", udp.destination_port);
+       print_uint_field("Length", udp.length);
+       print_hex_field("Checksum", udp.checksum, 4);
 }

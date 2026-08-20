@@ -2,56 +2,14 @@
 
 void print_arp(Arp arp)
 {
-    printf("\n%-*s: ARP\n",
-           PRINT_LABEL_WIDTH,
-           "Protocol");
-
-    printf("%-*s: 0x%04X\n",
-           PRINT_LABEL_WIDTH,
-           "Hardware Type",
-           arp.htype);
-
-    printf("%-*s: 0x%04X\n",
-           PRINT_LABEL_WIDTH,
-           "Protocol Type",
-           arp.ptype);
-
-    printf("%-*s: 0x%02X\n",
-           PRINT_LABEL_WIDTH,
-           "Hardware Length",
-           arp.hlen);
-
-    printf("%-*s: 0x%02X\n",
-           PRINT_LABEL_WIDTH,
-           "Protocol Length",
-           arp.plen);
-
-    printf("%-*s: 0x%04X\n",
-           PRINT_LABEL_WIDTH,
-           "Opcode",
-           arp.opcode);
-
-    printf("%-*s: ",
-           PRINT_LABEL_WIDTH,
-           "Sender Hardware Address");
-    print_mac(arp.sha);
-    printf("\n");
-
-    printf("%-*s: ",
-           PRINT_LABEL_WIDTH,
-           "Sender Protocol Address");
-    print_ip(arp.spa);
-    printf("\n");
-
-    printf("%-*s: ",
-           PRINT_LABEL_WIDTH,
-           "Target Hardware Address");
-    print_mac(arp.tha);
-    printf("\n");
-
-    printf("%-*s: ",
-           PRINT_LABEL_WIDTH,
-           "Target Protocol Address");
-    print_ip(arp.tpa);
-    printf("\n");
+       print_protocol_name("ARP");
+       print_hex_field("Hardware Type", arp.htype, 4);
+       print_hex_field("Protocol Type", arp.ptype, 4);
+       print_hex_field("Hardware Length", arp.hlen, 2);
+       print_hex_field("Protocol Length", arp.plen, 2);
+       print_hex_field("Opcode", arp.opcode, 4);
+       print_mac_field("Sender Hardware Address", arp.sha);
+       print_ip_field("Sender Protocol Address", arp.spa);
+       print_mac_field("Target Hardware Address", arp.tha);
+       print_ip_field("Target Protocol Address", arp.tpa);
 }
