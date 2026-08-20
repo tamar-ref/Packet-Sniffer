@@ -6,6 +6,7 @@ main:
 	gcc src/main.c \
 		src/capture/sniffer.c \
 		src/common/utils.c \
+		src/common/printer_utils.c \
 		src/printer/printer.c \
 		src/printer/payload.c \
 		src/printer/layer2/ethernet.c \

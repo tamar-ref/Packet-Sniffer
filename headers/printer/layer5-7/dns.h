@@ -5,7 +5,7 @@
 
 #include "../../common/types/layer5-7.h"
 #include "../../common/define.h"
-#include "../../common/utils.h"
+#include "../../common/printer_utils.h"
 
 void print_dns_record(DnsRecord record, const char *record_type, int index);
 void print_dns(Dns dns);

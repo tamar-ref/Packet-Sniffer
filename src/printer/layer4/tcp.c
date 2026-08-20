@@ -2,154 +2,69 @@
 
 void print_tcp(Tcp tcp)
 {
-    uint16_t data_offset = (tcp.data_offset_reserved_flags >> 12) & 0x0F;
-    uint16_t reserved = (tcp.data_offset_reserved_flags >> 9) & 0x07;
-    uint16_t flags = tcp.data_offset_reserved_flags & 0x01FF;
+       uint16_t data_offset = (tcp.data_offset_reserved_flags >> 12) & 0x0F;
+       uint16_t reserved = (tcp.data_offset_reserved_flags >> 9) & 0x07;
+       uint16_t flags = tcp.data_offset_reserved_flags & 0x01FF;
 
-    uint8_t ns = (flags >> 8) & 1;
-    uint8_t cwr = (flags >> 7) & 1;
-    uint8_t ece = (flags >> 6) & 1;
-    uint8_t urg = (flags >> 5) & 1;
-    uint8_t ack = (flags >> 4) & 1;
-    uint8_t psh = (flags >> 3) & 1;
-    uint8_t rst = (flags >> 2) & 1;
-    uint8_t syn = (flags >> 1) & 1;
-    uint8_t fin = flags & 1;
+       uint8_t ns = (flags >> 8) & 1;
+       uint8_t cwr = (flags >> 7) & 1;
+       uint8_t ece = (flags >> 6) & 1;
+       uint8_t urg = (flags >> 5) & 1;
+       uint8_t ack = (flags >> 4) & 1;
+       uint8_t psh = (flags >> 3) & 1;
+       uint8_t rst = (flags >> 2) & 1;
+       uint8_t syn = (flags >> 1) & 1;
+       uint8_t fin = flags & 1;
 
-    printf("\n%-*s: TCP\n",
-           PRINT_LABEL_WIDTH,
-           "Protocol");
+       print_protocol_name("TCP");
+       print_uint_field("Source Port", tcp.source_port);
+       print_uint_field("Destination Port", tcp.destination_port);
+       print_hex_field("Sequence Number", tcp.sequence_number, 8);
+       print_hex_field("Acknowledgment Number", tcp.acknowledgment_number, 8);
+       print_uint_bytes_field("Data Offset", data_offset * 4);
+       print_bits_field("Reserved", reserved, RESERVED_BITS);
 
-    printf("%-*s: %u\n",
-           PRINT_LABEL_WIDTH,
-           "Source Port",
-           tcp.source_port);
+       printf("Flags\n");
 
-    printf("%-*s: %u\n",
-           PRINT_LABEL_WIDTH,
-           "Destination Port",
-           tcp.destination_port);
+       print_sub_uint_field("NS", ns);
+       print_sub_uint_field("CWR", cwr);
+       print_sub_uint_field("ECE", ece);
+       print_sub_uint_field("URG", urg);
+       print_sub_uint_field("ACK", ack);
+       print_sub_uint_field("PSH", psh);
+       print_sub_uint_field("RST", rst);
+       print_sub_uint_field("SYN", syn);
+       print_sub_uint_field("FIN", fin);
 
-    printf("%-*s: 0x%08x\n",
-           PRINT_LABEL_WIDTH,
-           "Sequence Number",
-           tcp.sequence_number);
+       print_hex_field("Window Size", tcp.window_size, 4);
+       print_hex_field("Checksum", tcp.checksum, 4);
+       print_hex_field("Urgent Pointer", tcp.urgent_pointer, 4);
 
-    printf("%-*s: 0x%08x\n",
-           PRINT_LABEL_WIDTH,
-           "Acknowledgment Number",
-           tcp.acknowledgment_number);
+       if (data_offset > 5)
+       {
+              int options_length = (data_offset - 5) * 4;
 
-    printf("%-*s: %u bytes\n",
-           PRINT_LABEL_WIDTH,
-           "Data Offset",
-           data_offset * 4);
+              char options_string[PRINT_LABEL_WIDTH];
 
-    printf("%-*s: ",
-           PRINT_LABEL_WIDTH,
-           "Reserved");
-    print_bits(reserved, RESERVED_BITS);
-    printf("\n");
+              snprintf(options_string,
+                       sizeof(options_string),
+                       "Options (%d bytes)",
+                       options_length);
 
-    printf("Flags\n");
+              printf("%-*s: ",
+                     PRINT_LABEL_WIDTH,
+                     options_string);
 
-    printf("%-*s%-*s: %d\n",
-           SUB_LABEL_WIDTH,
-           "",
-           PRINT_LABEL_WIDTH - SUB_LABEL_WIDTH,
-           "CWR",
-           cwr);
-
-    printf("%-*s%-*s: %d\n",
-           SUB_LABEL_WIDTH,
-           "",
-           PRINT_LABEL_WIDTH - SUB_LABEL_WIDTH,
-           "ECE",
-           ece);
-
-    printf("%-*s%-*s: %d\n",
-           SUB_LABEL_WIDTH,
-           "",
-           PRINT_LABEL_WIDTH - SUB_LABEL_WIDTH,
-           "URG",
-           urg);
-
-    printf("%-*s%-*s: %d\n",
-           SUB_LABEL_WIDTH,
-           "",
-           PRINT_LABEL_WIDTH - SUB_LABEL_WIDTH,
-           "ACK",
-           ack);
-
-    printf("%-*s%-*s: %d\n",
-           SUB_LABEL_WIDTH,
-           "",
-           PRINT_LABEL_WIDTH - SUB_LABEL_WIDTH,
-           "PSH",
-           psh);
-
-    printf("%-*s%-*s: %d\n",
-           SUB_LABEL_WIDTH,
-           "",
-           PRINT_LABEL_WIDTH - SUB_LABEL_WIDTH,
-           "RST",
-           rst);
-
-    printf("%-*s%-*s: %d\n",
-           SUB_LABEL_WIDTH,
-           "",
-           PRINT_LABEL_WIDTH - SUB_LABEL_WIDTH,
-           "SYN",
-           syn);
-
-    printf("%-*s%-*s: %d\n",
-           SUB_LABEL_WIDTH,
-           "",
-           PRINT_LABEL_WIDTH - SUB_LABEL_WIDTH,
-           "FIN",
-           fin);
-
-    printf("%-*s: 0x%04x\n",
-           PRINT_LABEL_WIDTH,
-           "Window Size",
-           tcp.window_size);
-
-    printf("%-*s: 0x%04x\n",
-           PRINT_LABEL_WIDTH,
-           "Checksum",
-           tcp.checksum);
-
-    printf("%-*s: 0x%04x\n",
-           PRINT_LABEL_WIDTH,
-           "Urgent Pointer",
-           tcp.urgent_pointer);
-
-    if (data_offset > 5)
-    {
-        int options_length = (data_offset - 5) * 4;
-
-        char options_string[PRINT_LABEL_WIDTH];
-
-        snprintf(options_string,
-                 sizeof(options_string),
-                 "Options (%d bytes)",
-                 options_length);
-
-        printf("%-*s: ",
-               PRINT_LABEL_WIDTH,
-               options_string);
-
-        for (int i = 0; i < options_length; i++)
-        {
-            printf("%02X ",
-                   tcp.options[i]);
-        }
-        printf("\n");
-    }
-    else
-    {
-        printf("%-*s: None\n",
-               PRINT_LABEL_WIDTH,
-               "Options");
-    }
+              for (int i = 0; i < options_length; i++)
+              {
+                     printf("%02X ", tcp.options[i]);
+              }
+              printf("\n");
+       }
+       else
+       {
+              printf("%-*s: None\n",
+                     PRINT_LABEL_WIDTH,
+                     "Options");
+       }
 }

@@ -5,7 +5,7 @@
 
 #include "../../common/types/layer2.h"
 #include "../../common/define.h"
-#include "../../common/utils.h"
+#include "../../common/printer_utils.h"
 
 void print_arp(Arp arp);
 

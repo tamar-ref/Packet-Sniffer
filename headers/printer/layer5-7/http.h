@@ -5,6 +5,7 @@
 
 #include "../../common/types/layer5-7.h"
 #include "../../common/define.h"
+#include "../../common/printer_utils.h"
 
 void print_http(Http http);
 

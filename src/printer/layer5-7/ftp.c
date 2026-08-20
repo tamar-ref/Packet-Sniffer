@@ -2,40 +2,26 @@
 
 void print_ftp(Ftp ftp)
 {
-    printf("\n%-*s: FTP\n",
-           PRINT_LABEL_WIDTH,
-           "Protocol");
+       print_protocol_name("FTP");
 
-    if (ftp.is_request)
-    {
-        printf("%-*s: %s\n",
-               PRINT_LABEL_WIDTH,
-               "Command",
-               ftp.command);
+       if (ftp.is_request)
+       {
+              print_string_field("Command", ftp.command);
 
-        if (ftp.argument[0] != '\0')
-        {
-            printf("%-*s: %s\n",
-                   PRINT_LABEL_WIDTH,
-                   "Argument",
-                   ftp.argument);
-        }
-        else
-        {
-            printf("%-*s: None\n",
-                   PRINT_LABEL_WIDTH,
-                   "Argument");
-        }
-    }
-    else if (ftp.is_response)
-    {
-        printf("%-*s: %d\n",
-               PRINT_LABEL_WIDTH,
-               "Status Code",
-               ftp.status_code);
-        printf("%-*s: %s\n",
-               PRINT_LABEL_WIDTH,
-               "Status Text",
-               ftp.status_text);
-    }
+              if (ftp.argument[0] != '\0')
+              {
+                     print_string_field("Argument", ftp.argument);
+              }
+              else
+              {
+                     printf("%-*s: None\n",
+                            PRINT_LABEL_WIDTH,
+                            "Argument");
+              }
+       }
+       else if (ftp.is_response)
+       {
+              print_uint_field("Status Code", ftp.status_code);
+              print_string_field("Status Text", ftp.status_text);
+       }
 }

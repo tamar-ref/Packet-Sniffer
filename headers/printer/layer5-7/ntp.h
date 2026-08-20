@@ -5,7 +5,7 @@
 
 #include "../../common/types/layer5-7.h"
 #include "../../common/define.h"
-#include "../../common/utils.h"
+#include "../../common/printer_utils.h"
 
 double ntp_fixed_to_seconds(uint32_t value);
 void print_ntp(Ntp ntp);

@@ -2,36 +2,14 @@
 
 void print_vlan(Vlan vlan)
 {
-    uint16_t pcp = (vlan.tci >> 13) & 0x07;
-    uint16_t dei = (vlan.tci >> 12) & 0x01;
-    uint16_t vid = vlan.tci & 0x0FFF;
+       uint16_t pcp = (vlan.tci >> 13) & 0x07;
+       uint16_t dei = (vlan.tci >> 12) & 0x01;
+       uint16_t vid = vlan.tci & 0x0FFF;
 
-    printf("\n%-*s: VLAN\n",
-           PRINT_LABEL_WIDTH,
-           "Protocol");
-
-    printf("%-*s: 0x%04X\n",
-           PRINT_LABEL_WIDTH,
-           "TPID",
-           vlan.tpid);
-
-    printf("%-*s: %u\n",
-           PRINT_LABEL_WIDTH,
-           "Priority (PCP)",
-           pcp);
-
-    printf("%-*s: %u\n",
-           PRINT_LABEL_WIDTH,
-           "DEI",
-           dei);
-
-    printf("%-*s: %u\n",
-           PRINT_LABEL_WIDTH,
-           "VLAN ID",
-           vid);
-
-    printf("%-*s: 0x%04X\n",
-           PRINT_LABEL_WIDTH,
-           "EtherType",
-           vlan.ether_type);
+       print_protocol_name("VLAN");
+       print_hex_field("TPID", vlan.tpid, 4);
+       print_uint_field("Priority (PCP)", pcp);
+       print_uint_field("DEI", dei);
+       print_uint_field("VLAN ID", vid);
+       print_hex_field("EtherType", vlan.ether_type, 4);
 }
