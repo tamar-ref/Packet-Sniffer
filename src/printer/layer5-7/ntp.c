@@ -11,13 +11,13 @@ void print_ntp(Ntp ntp)
        uint8_t version = (ntp.li_version_mode >> 3) & 0x07;
        uint8_t mode = ntp.li_version_mode & 0x07;
 
-       print_protocol_name("NTP");
-       print_uint_field("Leap Indicator", li);
-       print_uint_field("Version", version);
-       print_uint_field("Mode", mode);
-       print_uint_field("Stratum", ntp.stratum);
-       print_uint_field("Poll", ntp.poll);
-       print_hex_field("Precision", ntp.precision, 2);
+       print_string_field("Protocol", "NTP", 0);
+       print_uint_field("Leap Indicator", li, 0);
+       print_uint_field("Version", version, 0);
+       print_uint_field("Mode", mode, 0);
+       print_uint_field("Stratum", ntp.stratum, 0);
+       print_uint_field("Poll", ntp.poll, 0);
+       print_hex_field("Precision", ntp.precision, 2, 0);
 
        printf("%-*s: %.6f seconds\n",
               PRINT_LABEL_WIDTH,
@@ -29,9 +29,9 @@ void print_ntp(Ntp ntp)
               "Root Dispersion",
               ntp_fixed_to_seconds(ntp.root_dispersion));
 
-       print_ip_field("Reference ID", ntp.reference_id);
-       print_timestamp_field("Reference Timestamp", ntp.reference_timestamp);
-       print_timestamp_field("Origin Timestamp", ntp.originate_timestamp);
-       print_timestamp_field("Receive Timestamp", ntp.receive_timestamp);
-       print_timestamp_field("Transmit Timestamp", ntp.transmit_timestamp);
+       print_ip_field("Reference ID", ntp.reference_id, 0);
+       print_timestamp_field("Reference Timestamp", ntp.reference_timestamp, 0);
+       print_timestamp_field("Origin Timestamp", ntp.originate_timestamp, 0);
+       print_timestamp_field("Receive Timestamp", ntp.receive_timestamp, 0);
+       print_timestamp_field("Transmit Timestamp", ntp.transmit_timestamp, 0);
 }

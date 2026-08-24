@@ -16,29 +16,29 @@ void print_tcp(Tcp tcp)
        uint8_t syn = (flags >> 1) & 1;
        uint8_t fin = flags & 1;
 
-       print_protocol_name("TCP");
-       print_uint_field("Source Port", tcp.source_port);
-       print_uint_field("Destination Port", tcp.destination_port);
-       print_hex_field("Sequence Number", tcp.sequence_number, 8);
-       print_hex_field("Acknowledgment Number", tcp.acknowledgment_number, 8);
-       print_uint_bytes_field("Data Offset", data_offset * 4);
-       print_bits_field("Reserved", reserved, RESERVED_BITS);
+       print_string_field("Protocol", "TCP", 0);
+       print_uint_field("Source Port", tcp.source_port, 0);
+       print_uint_field("Destination Port", tcp.destination_port, 0);
+       print_hex_field("Sequence Number", tcp.sequence_number, 8, 0);
+       print_hex_field("Acknowledgment Number", tcp.acknowledgment_number, 8, 0);
+       print_uint_bytes_field("Data Offset", data_offset * 4, 0);
+       print_bits_field("Reserved", reserved, RESERVED_BITS, 0);
 
        printf("Flags\n");
 
-       print_sub_uint_field("NS", ns);
-       print_sub_uint_field("CWR", cwr);
-       print_sub_uint_field("ECE", ece);
-       print_sub_uint_field("URG", urg);
-       print_sub_uint_field("ACK", ack);
-       print_sub_uint_field("PSH", psh);
-       print_sub_uint_field("RST", rst);
-       print_sub_uint_field("SYN", syn);
-       print_sub_uint_field("FIN", fin);
+       print_uint_field("NS", ns, 1);
+       print_uint_field("CWR", cwr, 1);
+       print_uint_field("ECE", ece, 1);
+       print_uint_field("URG", urg, 1);
+       print_uint_field("ACK", ack, 1);
+       print_uint_field("PSH", psh, 1);
+       print_uint_field("RST", rst, 1);
+       print_uint_field("SYN", syn, 1);
+       print_uint_field("FIN", fin, 1);
 
-       print_hex_field("Window Size", tcp.window_size, 4);
-       print_hex_field("Checksum", tcp.checksum, 4);
-       print_hex_field("Urgent Pointer", tcp.urgent_pointer, 4);
+       print_hex_field("Window Size", tcp.window_size, 4, 0);
+       print_hex_field("Checksum", tcp.checksum, 4, 0);
+       print_hex_field("Urgent Pointer", tcp.urgent_pointer, 4, 0);
 
        if (data_offset > 5)
        {
@@ -51,20 +51,10 @@ void print_tcp(Tcp tcp)
                        "Options (%d bytes)",
                        options_length);
 
-              printf("%-*s: ",
-                     PRINT_LABEL_WIDTH,
-                     options_string);
-
-              for (int i = 0; i < options_length; i++)
-              {
-                     printf("%02X ", tcp.options[i]);
-              }
-              printf("\n");
+              print_data(options_string, options_length, tcp.options, 0);
        }
        else
        {
-              printf("%-*s: None\n",
-                     PRINT_LABEL_WIDTH,
-                     "Options");
+              print_string_field("Options", "None", 0);
        }
 }
