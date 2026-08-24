@@ -2,36 +2,19 @@
 
 void print_ssh(Ssh ssh)
 {
-       print_protocol_name("SSH");
+       print_string_field("Protocol", "SSH", 0);
 
        if (ssh.is_identification)
        {
-              print_string_field("Identification", ssh.identification);
+              print_string_field("Identification", ssh.identification, 0);
        }
        else
        {
-              print_uint_bytes_field("Packet Length", ssh.packet_length);
-              print_uint_bytes_field("Padding Length", ssh.padding_length);
-              print_uint_field("Message Type", ssh.message_type);
-              print_uint_bytes_field("Payload Length", ssh.payload_length);
-
-              printf("%-*s: ",
-                     PRINT_LABEL_WIDTH,
-                     "Payload");
-              for (int i = 0; i < ssh.payload_length; i++)
-              {
-                     printf("%02X ", ssh.payload[i]);
-              }
-              printf("\n");
-
-              printf("%-*s: ",
-                     PRINT_LABEL_WIDTH,
-                     "Padding");
-              for (int i = 0; i < ssh.padding_length; i++)
-              {
-                     printf("%02X ",
-                            ssh.padding[i]);
-              }
-              printf("\n");
+              print_uint_bytes_field("Packet Length", ssh.packet_length, 0);
+              print_uint_bytes_field("Padding Length", ssh.padding_length, 0);
+              print_uint_field("Message Type", ssh.message_type, 0);
+              print_uint_bytes_field("Payload Length", ssh.payload_length, 0);
+              print_data("Payload", ssh.payload_length, ssh.payload, 0);
+              print_data("Padding", ssh.padding_length, ssh.padding, 0);
        }
 }
