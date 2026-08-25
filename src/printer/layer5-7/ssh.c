@@ -2,6 +2,7 @@
 
 void print_ssh(Ssh ssh)
 {
+       printf("\n");
        print_string_field("Protocol", "SSH", 0);
 
        if (ssh.is_identification)

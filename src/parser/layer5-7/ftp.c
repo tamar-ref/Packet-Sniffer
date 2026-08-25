@@ -185,5 +185,5 @@ int parse_ftp(Packet *packet, size_t *offset)
         return parse_ftp_response(packet, offset);
     }
 
-    return -1;
+    return 0;
 }

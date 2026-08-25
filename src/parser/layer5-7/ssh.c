@@ -136,5 +136,5 @@ int parse_ssh(Packet *packet, size_t *offset)
         return parse_ssh_packet(packet, offset);
     }
 
-    return -1;
+    return 0;
 }

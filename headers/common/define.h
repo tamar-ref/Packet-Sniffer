@@ -61,6 +61,24 @@
 #define NTP_PORT 123
 
 #define TELNET_PORT 23
+#define MAX_TELNET_DATA_SIZE 1024
+#define MAX_TELNET_COMMANDS 64
+#define TELNET_IAC 0xFF
+#define TELNET_SE 0xF0
+#define TELNET_NOP 0xF1
+#define TELNET_DM 0xF2
+#define TELNET_BRK 0xF3
+#define TELNET_IP 0xF4
+#define TELNET_AO 0xF5
+#define TELNET_AYT 0xF6
+#define TELNET_EC 0xF7
+#define TELNET_EL 0xF8
+#define TELNET_GA 0xF9
+#define TELNET_SB 0xFA
+#define TELNET_WILL 0xFB
+#define TELNET_WONT 0xFC
+#define TELNET_DO 0xFD
+#define TELNET_DONT 0xFE
 
 #define PRINT_LABEL_WIDTH 24
 #define SUB_LABEL_WIDTH 4

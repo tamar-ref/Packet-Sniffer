@@ -2,6 +2,7 @@
 
 void print_arp(Arp arp)
 {
+       printf("\n");
        print_string_field("Protocol", "ARP", 0);
        print_hex_field("Hardware Type", arp.htype, 4, 0);
        print_hex_field("Protocol Type", arp.ptype, 4, 0);

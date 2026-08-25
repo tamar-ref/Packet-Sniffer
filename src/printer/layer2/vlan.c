@@ -6,6 +6,7 @@ void print_vlan(Vlan vlan)
        uint16_t dei = (vlan.tci >> 12) & 0x01;
        uint16_t vid = vlan.tci & 0x0FFF;
 
+       printf("\n");
        print_string_field("Protocol", "VLAN", 0);
        print_hex_field("TPID", vlan.tpid, 4, 0);
        print_uint_field("Priority (PCP)", pcp, 0);

@@ -137,7 +137,17 @@ typedef struct
 
 typedef struct
 {
+    uint8_t command;
+    uint8_t option;
+    int has_option;
+} TelnetCommand;
 
+typedef struct
+{
+    uint8_t data[MAX_TELNET_DATA_SIZE];
+    size_t data_length;
+    TelnetCommand commands[MAX_TELNET_COMMANDS];
+    size_t command_count;
 } Telnet;
 
 #pragma pack(pop)

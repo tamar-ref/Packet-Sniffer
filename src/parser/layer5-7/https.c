@@ -22,30 +22,28 @@ int parse_https(Packet *packet, size_t *offset)
         return -1;
     }
 
-    if (is_tls(packet, offset) == 0)
+    if (is_tls(packet, offset))
     {
-        return -1;
-    }
+        packet->has_tls = 1;
+        size_t basic_tls_size = sizeof(Tls) - sizeof(packet->tls.fragment);
 
-    packet->has_tls = 1;
-    size_t basic_tls_size = sizeof(Tls) - sizeof(packet->tls.fragment);
+        memcpy(
+            &packet->tls,
+            packet->payload + *offset,
+            basic_tls_size);
 
-    memcpy(
-        &packet->tls,
-        packet->payload + *offset,
-        basic_tls_size);
+        packet->tls.version = ntohs(packet->tls.version);
+        packet->tls.length = ntohs(packet->tls.length);
 
-    packet->tls.version = ntohs(packet->tls.version);
-    packet->tls.length = ntohs(packet->tls.length);
+        *offset += basic_tls_size;
 
-    *offset += basic_tls_size;
-
-    if (packet->tls.length > 0)
-    {
-        memcpy(&packet->tls.fragment,
-               packet->payload + *offset,
-               packet->tls.length);
-        *offset += packet->tls.length;
+        if (packet->tls.length > 0)
+        {
+            memcpy(&packet->tls.fragment,
+                   packet->payload + *offset,
+                   packet->tls.length);
+            *offset += packet->tls.length;
+        }
     }
 
     return 0;

@@ -2,6 +2,7 @@
 
 void print_http(Http http)
 {
+       printf("\n");
        print_string_field("Protocol", "HTTP", 0);
 
        if (http.is_request)

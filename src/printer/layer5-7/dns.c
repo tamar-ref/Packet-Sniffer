@@ -15,6 +15,7 @@ void print_dns_record(DnsRecord record, const char *record_type, int index)
 
 void print_dns(Dns dns)
 {
+       printf("\n");
        print_string_field("Protocol", "DNS", 0);
        print_hex_field("Transaction ID", dns.transaction_id, 4, 0);
        print_bits_field("Flags", dns.flags, DNS_FLAGS, 0);
