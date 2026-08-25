@@ -2,6 +2,7 @@
 
 void print_ftp(Ftp ftp)
 {
+       printf("\n");
        print_string_field("Protocol", "FTP", 0);
 
        if (ftp.is_request)

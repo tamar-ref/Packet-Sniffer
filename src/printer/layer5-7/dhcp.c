@@ -11,6 +11,7 @@ void print_dhcp_option(DhcpOption option, int index)
 
 void print_dhcp(Dhcp dhcp)
 {
+       printf("\n");
        print_string_field("Protocol", "DHCP", 0);
        print_hex_field("Operation", dhcp.op, 2, 0);
        print_hex_field("Hardware Type", dhcp.htype, 2, 0);

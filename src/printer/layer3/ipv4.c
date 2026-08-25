@@ -12,6 +12,7 @@ void print_ipv4(IPv4 ipv4)
        uint8_t df = (flags >> 1) & 1;
        uint8_t mf = flags & 1;
 
+       printf("\n");
        print_string_field("Protocol", "IPv4", 0);
        print_uint_field("Version", version, 0);
        print_uint_bytes_field("IHL", ihl * 4, 0);

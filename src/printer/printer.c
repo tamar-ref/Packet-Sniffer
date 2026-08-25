@@ -98,6 +98,11 @@ void print_layer5_7(Packet packet)
         known_protocol = 1;
         print_ntp(packet.ntp);
     }
+    if (packet.has_telnet)
+    {
+        known_protocol = 1;
+        print_telnet(packet.telnet);
+    }
 
     if (!known_protocol)
     {

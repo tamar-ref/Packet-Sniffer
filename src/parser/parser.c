@@ -97,75 +97,95 @@ int parse_layer4(Packet *packet, size_t *offset, uint16_t *next_protocol)
 
 int parse_layer5_7(Packet *packet, size_t *offset)
 {
-    if (packet->has_tcp && (packet->tcp.destination_port == HTTP_PORT || packet->tcp.source_port == HTTP_PORT))
+    if (packet->has_tcp)
     {
-        if (parse_http(packet, offset) != 0)
+        if (packet->tcp.destination_port == HTTP_PORT || packet->tcp.source_port == HTTP_PORT)
         {
-            printf("HTTP Error\n");
-            return -1;
+            if (parse_http(packet, offset) != 0)
+            {
+                printf("HTTP Error\n");
+                return -1;
+            }
+        }
+
+        if (packet->tcp.destination_port == HTTPS_PORT || packet->tcp.source_port == HTTPS_PORT)
+        {
+            if (parse_https(packet, offset) != 0)
+            {
+                printf("HTTPS Error\n");
+                return -1;
+            }
+        }
+
+        if (packet->tcp.destination_port == DNS_PORT || packet->tcp.source_port == DNS_PORT)
+        {
+            if (parse_dns(packet, offset) != 0)
+            {
+                printf("DNS Error\n");
+                return -1;
+            }
+        }
+
+        if (packet->tcp.destination_port == CONTROL_FTP_PORT ||
+            packet->tcp.destination_port == ACTIVE_FTP_PORT ||
+            packet->tcp.source_port == CONTROL_FTP_PORT ||
+            packet->tcp.source_port == ACTIVE_FTP_PORT)
+        {
+            if (parse_ftp(packet, offset) != 0)
+            {
+                printf("FTP Error\n");
+                return -1;
+            }
+        }
+
+        if (packet->tcp.destination_port == SSH_PORT || packet->tcp.source_port == SSH_PORT)
+        {
+            if (parse_ssh(packet, offset) != 0)
+            {
+                printf("SSH Error\n");
+                return -1;
+            }
+        }
+
+        if (packet->tcp.destination_port == TELNET_PORT || packet->tcp.source_port == TELNET_PORT)
+        {
+            if (parse_telnet(packet, offset) != 0)
+            {
+                printf("Telnet Error\n");
+                return -1;
+            }
         }
     }
-
-    if (packet->has_tcp && (packet->tcp.destination_port == HTTPS_PORT || packet->tcp.source_port == HTTPS_PORT))
+    else if (packet->has_udp)
     {
-        if (parse_https(packet, offset) != 0)
+        if (packet->has_udp && (packet->udp.destination_port == DNS_PORT || packet->udp.source_port == DNS_PORT))
         {
-            printf("HTTPS Error\n");
-            return -1;
+            if (parse_dns(packet, offset) != 0)
+            {
+                printf("DNS Error\n");
+                return -1;
+            }
         }
-    }
 
-    if ((packet->has_tcp && (packet->tcp.destination_port == DNS_PORT || packet->tcp.source_port == DNS_PORT)) ||
-        (packet->has_udp && (packet->udp.destination_port == DNS_PORT || packet->udp.source_port == DNS_PORT)))
-    {
-        if (parse_dns(packet, offset) != 0)
+        if (packet->udp.destination_port == SERVER_DHCP_PORT ||
+            packet->udp.destination_port == CLIENT_DHCP_PORT ||
+            packet->udp.source_port == SERVER_DHCP_PORT ||
+            packet->udp.source_port == CLIENT_DHCP_PORT)
         {
-            printf("DNS Error\n");
-            return -1;
+            if (parse_dhcp(packet, offset) != 0)
+            {
+                printf("DHCP Error\n");
+                return -1;
+            }
         }
-    }
 
-    if (packet->has_udp &&
-        (packet->udp.destination_port == SERVER_DHCP_PORT ||
-         packet->udp.destination_port == CLIENT_DHCP_PORT ||
-         packet->udp.source_port == SERVER_DHCP_PORT ||
-         packet->udp.source_port == CLIENT_DHCP_PORT))
-    {
-        if (parse_dhcp(packet, offset) != 0)
+        if (packet->udp.destination_port == NTP_PORT || packet->udp.source_port == NTP_PORT)
         {
-            printf("DHCP Error\n");
-            return -1;
-        }
-    }
-
-    if (packet->has_tcp &&
-        (packet->tcp.destination_port == CONTROL_FTP_PORT ||
-         packet->tcp.destination_port == ACTIVE_FTP_PORT ||
-         packet->tcp.source_port == CONTROL_FTP_PORT ||
-         packet->tcp.source_port == ACTIVE_FTP_PORT))
-    {
-        if (parse_ftp(packet, offset) != 0)
-        {
-            printf("FTP Error\n");
-            return -1;
-        }
-    }
-
-    if (packet->has_tcp && (packet->tcp.destination_port == SSH_PORT || packet->tcp.source_port == SSH_PORT))
-    {
-        if (parse_ssh(packet, offset) != 0)
-        {
-            printf("SSH Error\n");
-            return -1;
-        }
-    }
-
-    if (packet->has_udp && (packet->udp.destination_port == NTP_PORT || packet->udp.source_port == NTP_PORT))
-    {
-        if (parse_ntp(packet, offset) != 0)
-        {
-            printf("NTP Error\n");
-            return -1;
+            if (parse_ntp(packet, offset) != 0)
+            {
+                printf("NTP Error\n");
+                return -1;
+            }
         }
     }
 
@@ -219,6 +239,7 @@ void parse_packet(Packet *packet, size_t *offset)
     packet->has_ftp = 0;
     packet->has_ssh = 0;
     packet->has_ntp = 0;
+    packet->has_telnet = 0;
     if (parse_layer5_7(packet, offset) != 0)
     {
         printf("Layer 5-7 Error\n");

@@ -6,6 +6,7 @@ void print_ipv6(IPv6 ipv6)
        uint32_t traffic_class = (ipv6.version_traffic_class_flow_label >> 20) & 0xFF;
        uint32_t flow_label = ipv6.version_traffic_class_flow_label & 0xFFFFF;
 
+       printf("\n");
        print_string_field("Protocol", "IPv6", 0);
        print_uint_field("Version", version, 0);
        print_hex_field("Traffic Class", traffic_class, 2, 0);

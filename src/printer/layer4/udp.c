@@ -2,6 +2,7 @@
 
 void print_udp(Udp udp)
 {
+       printf("\n");
        print_string_field("Protocol", "UDP", 0);
        print_uint_field("Source Port", udp.source_port, 0);
        print_uint_field("Destination Port", udp.destination_port, 0);

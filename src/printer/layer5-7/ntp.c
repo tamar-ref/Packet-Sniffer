@@ -11,6 +11,7 @@ void print_ntp(Ntp ntp)
        uint8_t version = (ntp.li_version_mode >> 3) & 0x07;
        uint8_t mode = ntp.li_version_mode & 0x07;
 
+       printf("\n");
        print_string_field("Protocol", "NTP", 0);
        print_uint_field("Leap Indicator", li, 0);
        print_uint_field("Version", version, 0);

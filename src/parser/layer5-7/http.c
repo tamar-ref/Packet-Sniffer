@@ -271,5 +271,5 @@ int parse_http(Packet *packet, size_t *offset)
         return parse_http_response(packet, offset);
     }
 
-    return -1;
+    return 0;
 }

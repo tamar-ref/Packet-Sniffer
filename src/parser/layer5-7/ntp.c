@@ -31,25 +31,23 @@ int parse_ntp(Packet *packet, size_t *offset)
         return -1;
     }
 
-    if (!is_ntp(packet, offset))
+    if (is_ntp(packet, offset))
     {
-        return -1;
+        packet->has_ntp = 1;
+
+        memcpy(&packet->ntp,
+               packet->payload + *offset,
+               sizeof(Ntp));
+
+        packet->ntp.root_delay = ntohl(packet->ntp.root_delay);
+        packet->ntp.root_dispersion = ntohl(packet->ntp.root_dispersion);
+        packet->ntp.reference_timestamp = be64toh(packet->ntp.reference_timestamp);
+        packet->ntp.originate_timestamp = be64toh(packet->ntp.originate_timestamp);
+        packet->ntp.receive_timestamp = be64toh(packet->ntp.receive_timestamp);
+        packet->ntp.transmit_timestamp = be64toh(packet->ntp.transmit_timestamp);
+
+        *offset += sizeof(Ntp);
     }
-
-    packet->has_ntp = 1;
-
-    memcpy(&packet->ntp,
-           packet->payload + *offset,
-           sizeof(Ntp));
-
-    packet->ntp.root_delay = ntohl(packet->ntp.root_delay);
-    packet->ntp.root_dispersion = ntohl(packet->ntp.root_dispersion);
-    packet->ntp.reference_timestamp = be64toh(packet->ntp.reference_timestamp);
-    packet->ntp.originate_timestamp = be64toh(packet->ntp.originate_timestamp);
-    packet->ntp.receive_timestamp = be64toh(packet->ntp.receive_timestamp);
-    packet->ntp.transmit_timestamp = be64toh(packet->ntp.transmit_timestamp);
-
-    *offset += sizeof(Ntp);
 
     return 0;
 }

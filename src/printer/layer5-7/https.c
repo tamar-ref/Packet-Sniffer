@@ -2,6 +2,7 @@
 
 void print_https(Tls tls)
 {
+    printf("\n");
     print_string_field("Protocol", "HTTPS", 0);
 
     printf("%-*s: 0x%02x",

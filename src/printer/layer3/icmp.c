@@ -2,6 +2,7 @@
 
 void print_icmp(Icmp icmp)
 {
+       printf("\n");
        print_string_field("Protocol", "ICMP", 0);
        print_hex_field("Type", icmp.type, 2, 0);
        print_hex_field("Code", icmp.code, 2, 0);

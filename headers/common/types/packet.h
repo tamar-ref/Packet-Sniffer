@@ -47,7 +47,8 @@ typedef struct
     Ssh ssh;
     int has_ntp;
     Ntp ntp;
-
+    int has_telnet;
+    Telnet telnet;
 } Packet;
 
 #endif

@@ -16,6 +16,7 @@ void print_tcp(Tcp tcp)
        uint8_t syn = (flags >> 1) & 1;
        uint8_t fin = flags & 1;
 
+       printf("\n");
        print_string_field("Protocol", "TCP", 0);
        print_uint_field("Source Port", tcp.source_port, 0);
        print_uint_field("Destination Port", tcp.destination_port, 0);
