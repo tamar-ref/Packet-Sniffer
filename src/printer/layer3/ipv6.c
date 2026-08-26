@@ -2,7 +2,7 @@
 
 void print_ipv6(IPv6 ipv6)
 {
-       uint32_t version = ipv6.version_traffic_class_flow_label >> 28;
+       uint32_t version = (ipv6.version_traffic_class_flow_label >> 28) & 0x0F;
        uint32_t traffic_class = (ipv6.version_traffic_class_flow_label >> 20) & 0xFF;
        uint32_t flow_label = ipv6.version_traffic_class_flow_label & 0xFFFFF;
 

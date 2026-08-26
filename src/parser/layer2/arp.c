@@ -2,7 +2,7 @@
 
 int parse_arp(Packet *packet, size_t *offset, uint16_t *next_protocol)
 {
-    if (packet == NULL || offset == NULL)
+    if (packet == NULL || offset == NULL || next_protocol == NULL)
     {
         return -1;
     }
