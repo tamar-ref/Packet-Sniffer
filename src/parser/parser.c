@@ -2,7 +2,11 @@
 
 int parse_layer2(Packet *packet, size_t *offset, uint16_t *next_protocol)
 {
-    parse_ethernet(packet, offset, next_protocol);
+    if (parse_ethernet(packet, offset, next_protocol) != 0)
+    {
+        printf("Ethernet Error\n");
+        return -1;
+    }
 
     if (*next_protocol == TPID)
     {
@@ -198,40 +202,12 @@ void parse_packet(Packet *packet, size_t *offset)
 
     packet->has_vlan = 0;
     packet->has_arp = 0;
-    if (parse_layer2(packet, offset, &next_protocol) != 0)
-    {
-        printf("Layer 2 Error\n");
-        return;
-    }
-
-    if (packet->has_arp)
-    {
-        return;
-    }
-
     packet->has_ipv4 = 0;
     packet->has_ipv6 = 0;
     packet->has_icmp = 0;
     packet->has_icmpv6 = 0;
-    if (parse_layer3(packet, offset, &next_protocol) != 0)
-    {
-        printf("Layer 3 Error\n");
-        return;
-    }
-
-    if (packet->has_icmp || packet->has_icmpv6)
-    {
-        return;
-    }
-
     packet->has_tcp = 0;
     packet->has_udp = 0;
-    if (parse_layer4(packet, offset, &next_protocol) != 0)
-    {
-        printf("Layer 4 Error\n");
-        return;
-    }
-
     packet->has_http = 0;
     packet->has_tls = 0;
     packet->has_dns = 0;
@@ -240,6 +216,33 @@ void parse_packet(Packet *packet, size_t *offset)
     packet->has_ssh = 0;
     packet->has_ntp = 0;
     packet->has_telnet = 0;
+
+    if (parse_layer2(packet, offset, &next_protocol) != 0)
+    {
+        printf("Layer 2 Error\n");
+        return;
+    }
+    if (packet->has_arp)
+    {
+        return;
+    }
+
+    if (parse_layer3(packet, offset, &next_protocol) != 0)
+    {
+        printf("Layer 3 Error\n");
+        return;
+    }
+    if (packet->has_icmp || packet->has_icmpv6)
+    {
+        return;
+    }
+
+    if (parse_layer4(packet, offset, &next_protocol) != 0)
+    {
+        printf("Layer 4 Error\n");
+        return;
+    }
+
     if (parse_layer5_7(packet, offset) != 0)
     {
         printf("Layer 5-7 Error\n");

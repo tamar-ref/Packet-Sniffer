@@ -2,7 +2,7 @@
 
 void print_ipv4(IPv4 ipv4)
 {
-       uint8_t version = ipv4.version_ihl >> 4;
+       uint8_t version = (ipv4.version_ihl >> 4) & 0x0F;
        uint8_t ihl = ipv4.version_ihl & 0x0F;
 
        uint16_t flags = (ipv4.flags_fragment_offset >> 13) & 0x07;

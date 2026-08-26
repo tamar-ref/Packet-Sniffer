@@ -2,7 +2,7 @@
 
 int parse_vlan(Packet *packet, size_t *offset, uint16_t *next_protocol)
 {
-    if (packet == NULL || offset == NULL)
+    if (packet == NULL || offset == NULL || next_protocol == NULL)
     {
         return -1;
     }
@@ -17,7 +17,7 @@ int parse_vlan(Packet *packet, size_t *offset, uint16_t *next_protocol)
     packet->vlan.tpid = ntohs(packet->vlan.tpid);
     packet->vlan.tci = ntohs(packet->vlan.tci);
     packet->vlan.ether_type = ntohs(packet->vlan.ether_type);
-    
+
     *offset += sizeof(Vlan);
     *next_protocol = packet->vlan.ether_type;
 

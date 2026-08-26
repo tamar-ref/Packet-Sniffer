@@ -39,6 +39,10 @@ void print_layer3(Packet packet)
             print_icmpv6(packet.icmpv6);
         }
     }
+    else
+    {
+        printf("Unknown Layer 3 Protocol\n");
+    }
 }
 
 void print_layer4(Packet packet)
@@ -53,6 +57,10 @@ void print_layer4(Packet packet)
     else if (packet.has_udp)
     {
         print_udp(packet.udp);
+    }
+    else
+    {
+        printf("Unknown Layer 4 Protocol\n");
     }
 }
 
